@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /*
+         * ===================================================================
+         * =================== VARIÁVEIS DE TEMA E COR ===================
+         * ===================================================================
+         */
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --text-color-muted: #4f46e5;
+            --placeholder-text-color: #818cf8;
+            --primary-color: #000000;
+            --btn-primary-text-color: #ffffff;
+            --btn-primary-hover-bg-color: #3730a3;
+            --accent-color: #4f46e5;
+            --btn-secondary-text-color: #000000;
+            --btn-secondary-border-color: #000000;
+            --btn-secondary-hover-bg-color: #e0e7ff;
+            --btn-secondary-hover-text-color: #000000;
+            --border-color: #000000;
+            --card-bg-color: #ffffff;
+            --card-hover-bg-color: #eef2ff;
+            --danger-color: #ef4444;
+            --danger-hover-bg-color: #dc2626;
+            --danger-hover-text-color: #ffffff;
+            --hr-color: var(--border-color);
+            --slider-track-color: #e5e7eb;
+            --slider-progress-color: var(--accent-color);
+            --svg-icon-color: #000000;
+            --widget-bg-color: rgba(255, 255, 255, 0.75);
+            --footer-link-color: #4338ca;
+        }
+
+        .dark:root {
+            --bg-color: #0c0a09;
+            --text-color: #f5f5f4;
+            --text-color-muted: #a78bfa;
+            --placeholder-text-color: #8b5cf6;
+            --primary-color: #f5f5f4;
+            --btn-primary-text-color: #0c0a09;
+            --btn-primary-hover-bg-color: #d8b4fe;
+            --accent-color: #a78bfa;
+            --btn-secondary-text-color: #f5f5f4;
+            --btn-secondary-border-color: #f5f5f4;
+            --btn-secondary-hover-bg-color: #281e48;
+            --btn-secondary-hover-text-color: #f5f5f4;
+            --border-color: #a78bfa;
+            --card-bg-color: #1c1917;
+            --card-hover-bg-color: #281e48;
+            --danger-color: #f87171;
+            --danger-hover-bg-color: #ef4444;
+            --danger-hover-text-color: #ffffff;
+            --hr-color: var(--border-color);
+            --slider-track-color: #3f3f46;
+            --slider-progress-color: var(--accent-color);
+            --svg-icon-color: #ffffff;
+            --widget-bg-color: rgba(28, 25, 23, 0.75);
+            --footer-link-color: #c4b5fd;
+        }
+        
+        /*
+         * ==============================================
+         * ============= ESTILOS GLOBAIS E RESET =============
+         * ==============================================
+         */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            font-family: 'Inter', sans-serif; 
+            transition: background-color 0.3s, color 0.3s, padding-top 0.3s;
+            padding-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #page-wrapper {
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        body.loaded #page-wrapper {
+            opacity: 1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .hidden { display: none !important; }
+        .muted-text { color: var(--text-color-muted); }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+        ::placeholder { color: var(--placeholder-text-color); opacity: 1; }
+
+        /*
+         * ===================================================================
+         * =================== ESTILOS DE BOTÕES E ANIMAÇÕES =================
+         * ===================================================================
+        */
+        .btn {
+            border: 2px solid var(--hr-color);
+            background: transparent;
+            color: inherit;
+            border-radius: 9999px;
+            padding: 10px 16px; 
+            margin: 2px;
+            font: inherit;
+            cursor: pointer;
+            font-size: 1.15em;
+            box-shadow: 0 0px 0px, inset 0 0 0 0px var(--hr-color); 
+            white-space: nowrap; 
+            transition: box-shadow 0.2s ease, border-radius 0.1s ease-in-out, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s, color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: auto;
+            height: auto; 
+            font-weight: 600;
+            gap: 0.5rem; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:hover, .btn:focus-visible {
+            outline: none;
+            background-color: transparent; 
+            box-shadow: 0 0px 0px, inset 0 0 0 3px var(--hr-color);
+        }
+
+        .btn:active {
+            border-radius: 1.5em;
+            background-color: transparent;
+            box-shadow: inset 0 0 0 0px var(--hr-color);
+            transform: scale(0.90);
+        }
+
+        .btn:focus {
+             outline: none;
+             box-shadow: 0 0px 0px, inset 0 0 0 3px var(--hr-color);
+        }
+
+        .btn-icon { 
+            padding: 0.75rem;
+            font-size: 1em;
+            border-radius: 50%;
+        }
+        
+        .btn svg {
+            width: 1.25em;
+            height: 1.25em;
+            color: var(--svg-icon-color);
+        }
+        
+        .btn-primary { 
+            border-color: var(--primary-color); 
+            color: var(--primary-color); 
+            --hr-color: var(--primary-color);
+        }
+
+        .btn-secondary { 
+            border-color: var(--btn-secondary-border-color); 
+            color: var(--btn-secondary-text-color); 
+            --hr-color: var(--btn-secondary-border-color);
+        }
+        .btn-secondary:hover, .btn-secondary:focus-visible {
+            color: var(--btn-secondary-hover-text-color);
+        }
+        
+        .btn-danger { 
+            border-color: var(--danger-color); 
+            color: var(--danger-color); 
+            --hr-color: var(--danger-color);
+        }
+        .btn-danger:hover, .btn-danger:focus-visible {
+            color: var(--danger-color);
+        }
+
+        .search-engine {
+            --hr-color: var(--btn-secondary-border-color);
+        }
+        .search-engine:hover, .search-engine:focus-visible {
+            color: var(--btn-secondary-hover-text-color);
+        }
+        
+        .search-engine.active {
+            border-color: var(--accent-color);
+            background-color: var(--accent-color);
+            color: var(--btn-primary-text-color);
+            --hr-color: var(--accent-color);
+        }
+        .search-engine.active svg {
+            color: var(--btn-primary-text-color);
+        }
+        .search-engine.active:hover, .search-engine.active:focus-visible {
+            background-color: var(--accent-color);
+            color: var(--btn-primary-text-color);
+            box-shadow: 0 0px 0px, inset 0 0 0 3px rgba(255,255,255,0.5);
+        }
+        .search-engine.active:active {
+            border-radius: 1.5em;
+            transform: scale(0.90);
+            box-shadow: 0 0px 0px, inset 0 0 0 3px rgba(0,0,0,0.2);
+        }
+
+        #shuffle-music-btn.active {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        #shuffle-music-btn.active svg {
+            color: var(--accent-color);
+        }
+
+        /*
+         * ==============================================
+         * ============ ESTILO DE COMPONENTES ===============
+         * ==============================================
+         */
+        .form-input, select.form-input, #notes-textarea, .color-input, .form-checkbox {
+            background-color: var(--card-bg-color); 
+            border: 2px solid var(--border-color); 
+            color: var(--text-color);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            width: 100%;
+        }
+        .form-input:focus, select.form-input:focus, #language-selector:focus, #notes-textarea:focus, .color-input:focus, .form-checkbox:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px var(--accent-color);
+        }
+        
+        select.form-input, #language-selector {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 2.5rem;
+        }
+
+        #notes-textarea {
+            border-radius: 1rem;
+            resize: none;
+            min-height: 240px;
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            width: 2.5rem; height: 1.5rem; padding: 0;
+            border: none; border-radius: 0.25rem; cursor: pointer;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 1px solid var(--border-color); border-radius: 0.25rem; }
+
+        .modal, .confirm-modal {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .site-card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+        }
+        .site-card:hover { background-color: var(--card-hover-bg-color); }
+        
+        .site-card span {
+            font-weight: 600;
+            font-size: 0.875rem;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color); 
+            transition: color 0.2s;
+        }
+        .site-card:hover span {
+             color: var(--accent-color);
+        }
+
+        .todo-item {
+            background-color: transparent !important;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .todo-item:hover {
+            border-color: var(--accent-color);
+            transform: translateX(4px);
+        }
+        .todo-item.completed span { text-decoration: line-through; color: var(--text-color-muted); }
+        .todo-item span { white-space: normal !important; word-break: break-word; flex: 1; overflow: hidden; text-overflow: ellipsis; }
+
+        #todo-list {
+            max-height: 240px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        #todo-list > * + * { margin-top: 0.5rem; }
+
+        #pomodoro-timer-display { 
+            font-size: clamp(3rem, 10vw, 4.5rem); 
+            font-weight: 700; 
+            letter-spacing: 0.05em; 
+            color: var(--accent-color);
+            transition: color 0.3s;
+        }
+        
+        .download-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .download-link:hover {
+            background-color: var(--card-hover-bg-color);
+        }
+        #download-md { border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; }
+        #download-txt { border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem; }
+        
+        /*
+         * ==============================================
+         * ============ LAYOUT E SEÇÕES =================
+         * ==============================================
+         */
+        #page-wrapper { flex: 1; }
+        .main-header-wrapper { display: flex; flex-direction: column; align-items: center; }
+
+        header.main-header {
+            position: fixed;
+            top: 6rem;
+            right: 1.25rem;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; 
+            transition: top 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        header.main-header.no-player { top: 1.25rem; }
+        
+        #language-selector, #settings-toggle { height: 44px; box-sizing: border-box; }
+        #language-selector { padding-top: 0; padding-bottom: 0; }
+        
+        #settings-toggle {
+            background-color: var(--card-bg-color);
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        #settings-toggle:hover, #settings-toggle:focus-visible {
+            background-color: var(--card-hover-bg-color);
+        }
+
+        #main-content { padding-top: 3rem; padding-bottom: 2.5rem; }
+        
+        #search-section {
+            max-width: 672px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background-color: var(--widget-bg-color);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+        #search-form {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        #search-input {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-left: 1.25rem;
+            padding-right: 4.5rem;
+            font-size: 1.125rem;
+        }
+
+        #search-form .btn {
+            position: absolute;
+            right: 0.7rem;
+            padding: 0.5rem;
+            border-radius: 2rem;
+        }
+        #search-form .btn:active { border-radius: 5rem; }
+
+        #search-engines {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1.5rem;
+        }
+        
+        #widgets-and-links-container { padding-bottom: 2.5rem; }
+        
+        #widgets-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+
+        .widget-section {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--widget-bg-color);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+        .widget-title { font-size: 1.25rem; font-weight: 700; }
+
+        #pomodoro-section { align-items: center; justify-content: center; text-align: center; }
+        #pomodoro-section .flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.4rem; 
+            margin-top: 1.5rem;
+        }
+        #pomodoro-section .flex.gap-2 { gap: 0.5rem; }
+        
+        #pomodoro-section .btn {
+            height: 44px;
+            box-sizing: border-box;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        #add-todo-form {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            align-items: stretch;
+        }
+        #todo-input { flex-grow: 1; height: 44px; }
+        #add-todo-form .btn { height: 44px; }
+
+        #link-blocks-section > * + * { margin-top: 2rem; }
+        
+        .add-block-container {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 0.75rem;
+            background-color: var(--card-bg-color);
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .add-block-container:hover {
+            background-color: var(--card-hover-bg-color);
+            border-color: var(--accent-color);
+        }
+
+        /*
+         * ==============================================
+         * ============ PLAYER DE MÚSICA =============
+         * ==============================================
+         */
+        #music-player-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 45;
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, border-color 0.3s, transform 0.3s ease-in-out;
+        }
+        #music-player-container.hidden { transform: translateY(-100%); }
+        .dark #music-player-container { box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+        .music-player-wrapper { max-width: 1024px; margin: 0 auto; display: flex; flex-direction: column; }
+        #music-player { display: flex; align-items: center; gap: 0.75rem; width: 100%; }
+        
+        #music-player .btn { padding: 10px; margin: 0; font-size: 1em; flex-shrink: 0; }
+        #play-pause-music-btn { padding: 14px; }
+        #music-track-info {
+            flex-grow: 1;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+            color: var(--text-color-muted);
+            padding: 0 0.5rem;
+        }
+        #music-progress-container { display: flex; align-items: center; gap: 0.5rem; width: 100%; margin-top: 0.25rem; }
+        
+        .slider-input {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 6px;
+            background: var(--slider-track-color);
+            outline: none; border-radius: 5px;
+            transition: background 0.3s; cursor: pointer;
+            background-image: linear-gradient(var(--slider-progress-color), var(--slider-progress-color));
+            background-size: 0% 100%;
+            background-repeat: no-repeat;
+        }
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 16px; height: 16px;
+            background: var(--slider-progress-color);
+            border-radius: 50%; cursor: pointer;
+            border: 2px solid var(--bg-color);
+            box-shadow: 0 0 2px rgba(0,0,0,0.5);
+        }
+        .slider-input::-moz-range-thumb {
+            width: 16px; height: 16px;
+            background: var(--slider-progress-color);
+            border-radius: 50%; cursor: pointer;
+            border: 2px solid var(--bg-color);
+            box-shadow: 0 0 2px rgba(0,0,0,0.5);
+        }
+        #music-time, #music-duration {
+            font-size: 0.75rem;
+            color: var(--text-color-muted);
+            min-width: 35px;
+            text-align: center;
+        }
+        #music-volume-container { display: flex; align-items: center; gap: 0.5rem; width: 120px; }
+        #music-volume-icon { color: var(--text-color-muted); width: 24px; height: 24px; text-align: center; }
+        #music-volume-icon svg { color: var(--svg-icon-color); }
+        .music-controls-right { position: relative; display: flex; align-items: center; gap: 0.5rem; margin-left: 1rem; }
+
+        #playlist-panel {
+            position: fixed;
+            top: 70px;
+            right: 1rem;
+            z-index: 40;
+            width: 320px;
+            max-height: calc(100vh - 90px);
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(-20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #playlist-panel.visible { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+        #playlist-header {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 0.5rem;
+        }
+        #playlist-header h3 { font-weight: bold; margin-right: auto; }
+        #playlist-list { list-style: none; padding: 0.5rem; overflow-y: auto; flex-grow: 1; }
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .playlist-item:hover { background-color: var(--card-hover-bg-color); }
+        .playlist-item.playing { background-color: var(--accent-color); color: var(--btn-primary-text-color); }
+        .playlist-item-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.9rem; flex-grow: 1; margin-right: 1rem; }
+        
+        .playlist-item .delete-music-btn {
+            border: 1px solid var(--danger-color);
+            border-radius: 50%;
+            background-color: transparent;
+            color: var(--danger-color);
+            width: 22px;
+            height: 22px;
+            opacity: 0.7;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .playlist-item .delete-music-btn svg { width: 12px; height: 12px; color: var(--danger-color); transition: color 0.2s ease; }
+        .playlist-item:hover .delete-music-btn { opacity: 1; background-color: var(--danger-color); }
+        .playlist-item:hover .delete-music-btn svg { color: #ffffff; }
+        .playlist-item.playing .delete-music-btn { color: var(--btn-primary-text-color); border-color: var(--btn-primary-text-color); }
+        .playlist-item.playing .delete-music-btn svg { color: var(--btn-primary-text-color); }
+        .playlist-item.playing:hover .delete-music-btn { background-color: var(--danger-hover-bg-color); border-color: var(--danger-hover-bg-color); }
+        
+        /*
+         * ==============================================
+         * ============ PAINEL DE CONFIGURAÇÕES ===========
+         * ==============================================
+         */
+        #settings-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 320px;
+            padding: 1.5rem;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            transform: translateX(100%);
+            background-color: var(--bg-color); 
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+            transition: transform 0.3s ease-in-out;
+            z-index: 50;
+        }
+        #settings-panel[aria-expanded="true"] { transform: translateX(0); }
+        .settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .settings-title { font-size: 1.25rem; font-weight: 700; }
+        .settings-section > * + * { margin-top: 1.5rem; }
+        .settings-section .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+        .settings-section label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+        .settings-section .label-sm { font-size: 0.875rem; }
+        .settings-section .input-hint { font-size: 0.75rem; color: var(--text-color-muted); margin-top: 0.25rem; }
+        .settings-section .border-t { border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
+        .settings-section .flex-between { display: flex; align-items: center; justify-content: space-between; }
+        .settings-section .space-y-4 { display: flex; flex-direction: column; gap: 1rem; }
+        
+        /*
+         * ==============================================
+         * ================== MODALS ====================
+         * ==============================================
+         */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .modal {
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 448px;
+            margin: 1rem;
+        }
+        .modal-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .modal-form > * + * { margin-top: 1rem; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; }
+        .confirm-modal { max-width: 384px; }
+
+        /*
+         * ==============================================
+         * ============= RODAPÉ (FOOTER) ================
+         * ==============================================
+        */
+        .main-footer {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .footer-link-item {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-color-muted);
+            background-color: var(--widget-bg-color);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid transparent; /* Para manter o layout consistente */
+        }
+        .main-footer a { color: var(--footer-link-color); text-decoration: none; font-weight: 500; }
+        .main-footer a:hover { text-decoration: underline; }
+        #credits-text a { color: var(--accent-color); text-decoration: none; font-weight: 500; }
+        #credits-text a:hover { text-decoration: underline; }
+
+        /*
+         * ==============================================
+         * ============ ESTILOS RESPONSIVOS =============
+         * ==============================================
+        */
+        @media (min-width: 640px) { #search-engines .search-engine-name { display: inline-block; } }
+        @media (min-width: 1024px) { #widgets-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 640px) {
+            .main-header-wrapper { order: 1; }
+            header.main-header { position: relative; top: auto; right: auto; width: 100%; justify-content: flex-end; padding: 0.5rem 1rem; }
+            #search-section { order: 2; margin-top: 0.5rem; margin-bottom: 2rem; width: 100%; padding: 1rem; }
+            body.player-visible { padding-top: 80px; }
+            body.player-hidden { padding-top: 1rem; }
+            header.main-header.no-player { top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        (function() {
+            try {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                }
+
+                const musicPlayerEnabled = JSON.parse(localStorage.getItem('musicPlayerEnabled') ?? 'true');
+                if (!musicPlayerEnabled) {
+                    document.body.classList.add('player-hidden');
+                } else {
+                    document.body.classList.add('player-visible');
+                }
+
+                const bgImageUrl = JSON.parse(localStorage.getItem('backgroundImageUrl') || '""');
+                if (bgImageUrl) {
+                    document.documentElement.style.setProperty('--bg-image', `url('${bgImageUrl}')`);
+                }
+            } catch (e) {
+                console.error('Erro ao aplicar configurações iniciais:', e);
+            }
+        })();
+    </script>
+    <div id="page-wrapper">
+        <div id="music-player-container">
+            <div class="music-player-wrapper">
+                <div id="music-player">
+                    <button id="prev-music-btn" class="btn btn-secondary btn-icon" data-lang-key-aria="previousSong">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M236.3 107.1C247.9 96 265 92.9 279.7 99.2C294.4 105.5 304 120 304 136L304 272.3L476.3 107.2C487.9 96 505 92.9 519.7 99.2C534.4 105.5 544 120 544 136L544 504C544 520 534.4 534.5 519.7 540.8C505 547.1 487.9 544 476.3 532.9L304 367.7L304 504C304 520 294.4 534.5 279.7 540.8C265 547.1 247.9 544 236.3 532.9L44.3 348.9C36.5 341.3 32 330.9 32 320C32 309.1 36.5 298.7 44.3 291.1L236.3 107.1z"/></svg>
+                    </button>
+                    <button id="play-pause-music-btn" class="btn btn-primary btn-icon" data-lang-key-aria="play"></button>
+                    <button id="next-music-btn" class="btn btn-secondary btn-icon" data-lang-key-aria="nextSong">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M403.7 107.1C392.1 96 375 92.9 360.3 99.2C345.6 105.5 336 120 336 136L336 272.3L163.7 107.2C152.1 96 135 92.9 120.3 99.2C105.6 105.5 96 120 96 136L96 504C96 520 105.6 534.5 120.3 540.8C135 547.1 152.1 544 163.7 532.9L336 367.7L336 504C336 520 345.6 534.5 360.3 540.8C375 547.1 392.1 544 403.7 532.9L595.7 348.9C603.6 341.4 608 330.9 608 320C608 309.1 603.5 298.7 595.7 291.1L403.7 107.1z"/></svg>
+                    </button>
+                    <button id="shuffle-music-btn" class="btn btn-secondary btn-icon" data-lang-key-aria="toggleShuffle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M467.8 98.4C479.8 93.4 493.5 96.2 502.7 105.3L566.7 169.3C572.7 175.3 576.1 183.4 576.1 191.9C576.1 200.4 572.7 208.5 566.7 214.5L502.7 278.5C493.5 287.7 479.8 290.4 467.8 285.4C455.8 280.4 448 268.9 448 256L448 224L416 224C405.9 224 396.4 228.7 390.4 236.8L358 280L318 226.7L339.2 198.4C357.3 174.2 385.8 160 416 160L448 160L448 128C448 115.1 455.8 103.4 467.8 98.4zM218 360L258 413.3L236.8 441.6C218.7 465.8 190.2 480 160 480L96 480C78.3 480 64 465.7 64 448C64 430.3 78.3 416 96 416L160 416C170.1 416 179.6 411.3 185.6 403.2L218 360zM502.6 534.6C493.4 543.8 479.7 546.5 467.7 541.5C455.7 536.5 448 524.9 448 512L448 480L416 480C385.8 480 357.3 465.8 339.2 441.6L185.6 236.8C179.6 228.7 170.1 224 160 224L96 224C78.3 224 64 209.7 64 192C64 174.3 78.3 160 96 160L160 160C190.2 160 218.7 174.2 236.8 198.4L390.4 403.2C396.4 411.3 405.9 416 416 416L448 416L448 384C448 371.1 455.8 359.4 467.8 354.4C479.8 349.4 493.5 352.2 502.7 361.3L566.7 425.3C572.7 431.3 576.1 439.4 576.1 447.9C576.1 456.4 572.7 464.5 566.7 470.5L502.7 534.5z"/></svg>
+                    </button>
+                    <div id="music-track-info" data-lang-key="noSong">Nenhuma música tocando</div>
+                    <div id="music-volume-container">
+                        <div id="music-volume-icon"></div>
+                        <input type="range" id="music-volume-slider" class="slider-input" value="1" min="0" max="1" step="0.01">
+                    </div>
+                    <div class="music-controls-right">
+                        <input type="file" id="import-music-input" multiple accept="audio/*" class="hidden">
+                        <label for="import-music-input" id="import-music-btn" class="btn btn-secondary btn-icon" data-lang-key-aria="importSongs">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>
+                        </label>
+                        <button id="toggle-playlist-btn" class="btn btn-secondary btn-icon" data-lang-key-aria="togglePlaylist">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M104 112C90.7 112 80 122.7 80 136L80 184C80 197.3 90.7 208 104 208L152 208C165.3 208 176 197.3 176 184L176 136C176 122.7 165.3 112 152 112L104 112zM256 128C238.3 128 224 142.3 224 160C224 177.7 238.3 192 256 192L544 192C561.7 192 576 177.7 576 160C576 142.3 561.7 128 544 128L256 128zM256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L256 288zM256 448C238.3 448 224 462.3 224 480C224 497.7 238.3 512 256 512L544 512C561.7 512 576 497.7 576 480C576 462.3 561.7 448 544 448L256 448zM80 296L80 344C80 357.3 90.7 368 104 368L152 368C165.3 368 176 357.3 176 344L176 296C176 282.7 165.3 272 152 272L104 272C90.7 272 80 282.7 80 296zM104 432C90.7 432 80 442.7 80 456L80 504C80 517.3 90.7 528 104 528L152 528C165.3 528 176 517.3 176 504L176 456C176 442.7 165.3 432 152 432L104 432z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="music-progress-container">
+                    <span id="music-time">0:00</span>
+                    <input type="range" id="music-seek-slider" class="slider-input" value="0" min="0" max="100">
+                    <span id="music-duration">0:00</span>
+                </div>
+            </div>
+            <div id="playlist-panel">
+                <div id="playlist-header">
+                    <h3 data-lang-key="playlist">Playlist</h3>
+                    <button id="restore-default-songs-btn" class="btn btn-secondary btn-icon" style="padding: 4px; font-size: 0.75rem;" data-lang-key-aria="restoreDefaultSongs">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M320 128C263.2 128 212.1 152.7 176.9 192L224 192C241.7 192 256 206.3 256 224C256 241.7 241.7 256 224 256L96 256C78.3 256 64 241.7 64 224L64 96C64 78.3 78.3 64 96 64C113.7 64 128 78.3 128 96L128 150.7C174.9 97.6 243.5 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C233 576 156.1 532.6 109.9 466.3C99.8 451.8 103.3 431.9 117.8 421.7C132.3 411.5 152.2 415.1 162.4 429.6C197.2 479.4 254.8 511.9 320 511.9C426 511.9 512 425.9 512 319.9C512 213.9 426 128 320 128z"/></svg>
+                    </button>
+                    <button id="clear-playlist-btn" class="btn btn-danger btn-icon" style="padding: 4px; font-size: 0.75rem;" data-lang-key-aria="clearPlaylist">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M504.6 148.5C515.9 134.9 514.1 114.7 500.5 103.4C486.9 92.1 466.7 93.9 455.4 107.5L320 270L184.6 107.5C173.3 93.9 153.1 92.1 139.5 103.4C125.9 114.7 124.1 134.9 135.4 148.5L278.3 320L135.4 491.5C124.1 505.1 125.9 525.3 139.5 536.6C153.1 547.9 173.3 546.1 184.6 532.5L320 370L455.4 532.5C466.7 546.1 486.9 547.9 500.5 536.6C514.1 525.3 515.9 505.1 504.6 491.5L361.7 320L504.6 148.5z"/></svg>
+                    </button>
+                </div>
+                <ul id="playlist-list"></ul>
+            </div>
+        </div>
+
+        <div class="main-header-wrapper">
+            <header class="main-header">
+                <div style="position: relative;">
+                    <select id="language-selector" class="form-input">
+                        <option value="pt">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                    </select>
+                    <div style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-color-muted);" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M480-345 240-585l43-43 197 198 197-198 43 43-240 240Z"/></svg>
+                    </div>
+                </div>
+                <button id="settings-toggle" class="btn btn-secondary btn-icon" data-lang-key-aria="openSettings" aria-controls="settings-panel" aria-expanded="false">
+                    <svg class="settings-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style="font-size: 1.25rem;" aria-hidden="true"><path fill="currentColor" d="M259.1 73.5C262.1 58.7 275.2 48 290.4 48L350.2 48C365.4 48 378.5 58.7 381.5 73.5L396 143.5C410.1 149.5 423.3 157.2 435.3 166.3L503.1 143.8C517.5 139 533.3 145 540.9 158.2L570.8 210C578.4 223.2 575.7 239.8 564.3 249.9L511 297.3C511.9 304.7 512.3 312.3 512.3 320C512.3 327.7 511.8 335.3 511 342.7L564.4 390.2C575.8 400.3 578.4 417 570.9 430.1L541 481.9C533.4 495 517.6 501.1 503.2 496.3L435.4 473.8C423.3 482.9 410.1 490.5 396.1 496.6L381.7 566.5C378.6 581.4 365.5 592 350.4 592L290.6 592C275.4 592 262.3 581.3 259.3 566.5L244.9 496.6C230.8 490.6 217.7 482.9 205.6 473.8L137.5 496.3C123.1 501.1 107.3 495.1 99.7 481.9L69.8 430.1C62.2 416.9 64.9 400.3 76.3 390.2L129.7 342.7C128.8 335.3 128.4 327.7 128.4 320C128.4 312.3 128.9 304.7 129.7 297.3L76.3 249.8C64.9 239.7 62.3 223 69.8 209.9L99.7 158.1C107.3 144.9 123.1 138.9 137.5 143.7L205.3 166.2C217.4 157.1 230.6 149.5 244.6 143.4L259.1 73.5zM320.3 400C364.5 399.8 400.2 363.9 400 319.7C399.8 275.5 363.9 239.8 319.7 240C275.5 240.2 239.8 276.1 240 320.3C240.2 364.5 276.1 400.2 320.3 400z"/></svg>
+                </button>
+            </header>
+
+            <main id="main-content" class="container">
+                <section id="search-section">
+                    <form id="search-form" role="search">
+                        <input type="text" id="search-input" class="form-input" data-lang-key-placeholder="searchPlaceholder">
+                        <button type="submit" class="btn btn-primary btn-icon" data-lang-key-aria="search">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        </button>
+                    </form>
+                    <div id="search-engines"></div>
+                </section>
+            </main>
+        </div>
+
+        <div id="widgets-and-links-container" class="container">
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <div id="widgets-grid">
+                    <section id="notes-section" class="widget-section">
+                        <div class="widget-header">
+                            <h2 class="widget-title" data-lang-key="quickNotes">Notas Rápidas</h2>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <a href="#" id="external-editor-btn" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" data-lang-key-aria="openEditor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path fill="currentColor" d="M384 64C366.3 64 352 78.3 352 96C352 113.7 366.3 128 384 128L466.7 128L265.3 329.4C252.8 341.9 252.8 362.2 265.3 374.7C277.8 387.2 298.1 387.2 310.6 374.7L512 173.3L512 256C512 273.7 526.3 288 544 288C561.7 288 576 273.7 576 256L576 96C576 78.3 561.7 64 544 64L384 64zM144 160C99.8 160 64 195.8 64 240L64 496C64 540.2 99.8 576 144 576L400 576C444.2 576 480 540.2 480 496L480 416C480 398.3 465.7 384 448 384C430.3 384 416 398.3 416 416L416 496C416 504.8 408.8 512 400 512L144 512C135.2 512 128 504.8 128 496L128 240C128 231.2 135.2 224 144 224L224 224C241.7 224 256 209.7 256 192C256 174.3 241.7 160 224 160L144 160z"/></svg>
+                                </a>
+                                <div style="position: relative;">
+                                    <button id="download-notes-toggle" class="btn btn-secondary btn-icon" data-lang-key-aria="downloadNotes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path fill="currentColor" d="M352 96C352 78.3 337.7 64 320 64C302.3 64 288 78.3 288 96L288 306.7L246.6 265.3C234.1 252.8 213.8 252.8 201.3 265.3C188.8 277.8 188.8 298.1 201.3 310.6L297.3 406.6C309.8 419.1 330.1 419.1 342.6 406.6L438.6 310.6C451.1 298.1 451.1 277.8 438.6 265.3C426.1 252.8 405.8 252.8 393.3 265.3L352 306.7L352 96zM160 384C124.7 384 96 412.7 96 448L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 448C544 412.7 515.3 384 480 384L433.1 384L376.5 440.6C345.3 471.8 294.6 471.8 263.4 440.6L206.9 384L160 384zM464 440C477.3 440 488 450.7 488 464C488 477.3 477.3 488 464 488C450.7 488 440 477.3 440 464C440 450.7 450.7 440 464 440z"/></svg>
+                                    </button>
+                                    <div id="download-options" class="hidden" style="position: absolute; right: 0; margin-top: 0.5rem; width: 12rem; background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10; overflow: hidden;">
+                                        <a href="#" id="download-md" class="download-link" data-lang-key="downloadAsMD">Baixar como .md</a>
+                                        <a href="#" id="download-txt" class="download-link" data-lang-key="downloadAsTXT">Baixar como .txt</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <textarea id="notes-textarea" style="flex-grow: 1;" data-lang-key-placeholder="notesPlaceholder"></textarea>
+                    </section>
+                    <section id="pomodoro-section" class="widget-section">
+                        <div id="pomodoro-timer-display">25:00</div>
+                        <div class="flex">
+                            <button id="start-pause-pomodoro" class="btn btn-primary">
+                                <div class="pomodoro-icon-container"></div>
+                                <span data-lang-key="start">Iniciar</span>
+                            </button>
+                            <button id="reset-pomodoro" class="btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M320 128C263.2 128 212.1 152.7 176.9 192L224 192C241.7 192 256 206.3 256 224C256 241.7 241.7 256 224 256L96 256C78.3 256 64 241.7 64 224L64 96C64 78.3 78.3 64 96 64C113.7 64 128 78.3 128 96L128 150.7C174.9 97.6 243.5 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C233 576 156.1 532.6 109.9 466.3C99.8 451.8 103.3 431.9 117.8 421.7C132.3 411.5 152.2 415.1 162.4 429.6C197.2 479.4 254.8 511.9 320 511.9C426 511.9 512 425.9 512 319.9C512 213.9 426 128 320 128z"/></svg>
+                                <span data-lang-key="reset">Resetar</span>
+                            </button>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="skip-to-work" class="btn btn-secondary" style="font-size: 0.875rem;" data-lang-key="skipToWork">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M264 112L376 112C380.4 112 384 115.6 384 120L384 160L256 160L256 120C256 115.6 259.6 112 264 112zM208 120L208 160L128 160C92.7 160 64 188.7 64 224L64 320L576 320L576 224C576 188.7 547.3 160 512 160L432 160L432 120C432 89.1 406.9 64 376 64L264 64C233.1 64 208 89.1 208 120zM576 368L384 368L384 384C384 401.7 369.7 416 352 416L288 416C270.3 416 256 401.7 256 384L256 368L64 368L64 480C64 515.3 92.7 544 128 544L512 544C547.3 544 576 515.3 576 480L576 368z"/></svg>
+                                <span class="search-engine-name" data-lang-key="work">Trabalho</span>
+                            </button>
+                            <button id="skip-to-short-break" class="btn btn-secondary" style="font-size: 0.875rem;" data-lang-key="skipToShortBreak">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M96 128C96 110.3 110.3 96 128 96L480 96C550.7 96 608 153.3 608 224C608 294.7 550.7 352 480 352C480 405 437 448 384 448L192 448C139 448 96 405 96 352L96 128zM544 224C544 188.7 515.3 160 480 160L480 288C515.3 288 544 259.3 544 224zM96 512L480 512C497.7 512 512 526.3 512 544C512 561.7 497.7 576 480 576L96 576C78.3 576 64 561.7 64 544C64 526.3 78.3 512 96 512z"/></svg>
+                                <span class="search-engine-name" data-lang-key="shortBreak">Pausa</span>
+                            </button>
+                            <button id="skip-to-long-break" class="btn btn-secondary" style="font-size: 0.875rem;" data-lang-key="skipToLongBreak">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M144 336C144 288.7 109.8 249.4 64.8 241.5C72 177.6 126.2 128 192 128L448 128C513.8 128 568 177.6 575.2 241.5C530.2 249.5 496 288.7 496 336L496 368L144 368L144 336zM0 448L0 336C0 309.5 21.5 288 48 288C74.5 288 96 309.5 96 336L96 416L544 416L544 336C544 309.5 565.5 288 592 288C618.5 288 640 309.5 640 336L640 448C640 483.3 611.3 512 576 512L64 512C28.7 512 0 483.3 0 448z"/></svg>
+                                <span class="search-engine-name" data-lang-key="longBreak">Descanso</span>
+                            </button>
+                        </div>
+                    </section>
+                    <section id="todo-section" class="widget-section">
+                        <h2 class="widget-title" style="margin-bottom: 1rem; flex-shrink: 0;" data-lang-key="todoList">Lista de Tarefas</h2>
+                        <form id="add-todo-form">
+                            <input type="text" id="todo-input" class="form-input" data-lang-key-placeholder="newTodoPlaceholder" required>
+                            <button type="submit" class="btn btn-primary" data-lang-key="add">Adicionar</button>
+                        </form>
+                        <div id="todo-list"></div>
+                    </section>
+                </div>
+            </div>
+            <section id="link-blocks-section"></section>
+            <div class="add-block-container">
+                <button id="add-block-btn" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path fill="currentColor" d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>
+                    <span data-lang-key="addBlock">Adicionar Bloco</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <!-- 
+          COMENTÁRIO PARA EDIÇÃO DO RODAPÉ:
+          Para adicionar mais links no rodapé, copie e cole todo o bloco <p class="footer-link-item">...</p> abaixo.
+          Depois, vá até a seção de SCRIPT no final deste arquivo, encontre o objeto 'translations', e adicione
+          uma nova chave (ex: 'footerLink2Text', 'footerLink2Url') para cada idioma com o novo texto e link.
+        -->
+        <div id="footer-links-container">
+            <p id="academic-search-text" class="footer-link-item"></p>
+        </div>
+    </footer>
+
+    <div id="settings-panel" role="region" aria-labelledby="settings-title" aria-expanded="false">
+        <div class="settings-header">
+            <h2 id="settings-title" class="settings-title" data-lang-key="settings">Configurações</h2>
+            <button id="close-settings" class="btn btn-secondary btn-icon" data-lang-key-aria="closeSettings">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style="font-size: 1.25rem;" aria-hidden="true"><path fill="currentColor" d="M504.6 148.5C515.9 134.9 514.1 114.7 500.5 103.4C486.9 92.1 466.7 93.9 455.4 107.5L320 270L184.6 107.5C173.3 93.9 153.1 92.1 139.5 103.4C125.9 114.7 124.1 134.9 135.4 148.5L278.3 320L135.4 491.5C124.1 505.1 125.9 525.3 139.5 536.6C153.1 547.9 173.3 546.1 184.6 532.5L320 370L455.4 532.5C466.7 546.1 486.9 547.9 500.5 536.6C514.1 525.3 515.9 505.1 504.6 491.5L361.7 320L504.6 148.5z"/></svg>
+            </button>
+        </div>
+        
+        <div class="settings-section">
+            <div>
+                <label data-lang-key="pomodoro">Pomodoro</label>
+                <div class="grid-3" style="margin-bottom: 1rem;">
+                    <div>
+                        <label for="pomodoro-work-duration" class="label-sm muted-text" data-lang-key="work">Trabalho</label>
+                        <input type="number" id="pomodoro-work-duration" class="form-input" min="1">
+                    </div>
+                    <div>
+                        <label for="pomodoro-short-break" class="label-sm muted-text" data-lang-key="shortBreak">Pausa</label>
+                        <input type="number" id="pomodoro-short-break" class="form-input" min="1">
+                    </div>
+                    <div>
+                        <label for="pomodoro-long-break" class="label-sm muted-text" data-lang-key="longBreak">Descanso</label>
+                        <input type="number" id="pomodoro-long-break" class="form-input" min="1">
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex-between">
+                        <label for="toggle-pomodoro-auto-switch" class="label-sm" data-lang-key="pomodoroAutoSwitch">Transição Automática</label>
+                        <input type="checkbox" id="toggle-pomodoro-auto-switch" class="form-checkbox" style="height: 1.25rem; width: 1.25rem; border-radius: 0.25rem; cursor: pointer; color: var(--accent-color);">
+                    </div>
+                    <div>
+                        <label for="pomodoro-alert-volume" class="label-sm" data-lang-key="pomodoroAlertVolume">Volume do Alerta</label>
+                        <input type="range" id="pomodoro-alert-volume" min="0" max="1" step="0.01" class="slider-input">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label data-lang-key="theme">Tema</label>
+                <button id="theme-toggle" class="btn btn-secondary" style="width: 100%;"></button>
+            </div>
+            
+            <div class="border-t">
+                <h3 class="widget-title" style="margin-bottom: 1rem;" data-lang-key="visibility">Visibilidade</h3>
+                <div class="space-y-4">
+                    <div class="flex-between">
+                        <label for="toggle-music-player" class="label-sm" data-lang-key="enableMusicPlayer">Habilitar Player de Música</label>
+                        <input type="checkbox" id="toggle-music-player" class="form-checkbox" style="height: 1.25rem; width: 1.25rem; border-radius: 0.25rem; cursor: pointer; color: var(--accent-color);">
+                    </div>
+                    <div class="flex-between">
+                        <label for="toggle-widgets" class="label-sm" data-lang-key="showProductivityWidgets">Exibir Notas e Tarefas</label>
+                        <input type="checkbox" id="toggle-widgets" class="form-checkbox" style="height: 1.25rem; width: 1.25rem; border-radius: 0.25rem; cursor: pointer; color: var(--accent-color);">
+                    </div>
+                    <div class="flex-between">
+                        <label for="toggle-pomodoro" class="label-sm" data-lang-key="enablePomodoro">Habilitar Pomodoro</label>
+                        <input type="checkbox" id="toggle-pomodoro" class="form-checkbox" style="height: 1.25rem; width: 1.25rem; border-radius: 0.25rem; cursor: pointer; color: var(--accent-color);">
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t">
+                <h3 class="widget-title" style="margin-bottom: 1rem;" data-lang-key="background">Plano de Fundo</h3>
+                <div>
+                    <label for="background-image-url" class="label-sm" data-lang-key="backgroundImageUrl">URL da Imagem</label>
+                    <input type="text" id="background-image-url" class="form-input" data-lang-key-placeholder="imageUrlPlaceholder">
+                </div>
+                <button id="clear-background-btn" class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem; font-size: 0.875rem;" data-lang-key="clearBackground">Limpar Plano de Fundo</button>
+            </div>
+
+            <div id="custom-colors-section" class="border-t">
+                <h3 class="widget-title" style="margin-bottom: 0.5rem;" data-lang-key="customColors">Cores Customizadas</h3>
+                <p class="input-hint" style="margin-bottom: 1rem;" data-lang-key="customColorsHint">As cores são salvas para o tema atual (claro/escuro).</p>
+                <div id="color-inputs-container"></div>
+                <button id="reset-colors-btn" class="btn btn-secondary" style="width: 100%; margin-top: 1rem; font-size: 0.875rem;" data-lang-key="resetColors">Resetar Cores</button>
+            </div>
+
+            <div>
+                <label for="font-selector" data-lang-key="font">Fonte</label>
+                <div style="position: relative; margin-bottom: 0.5rem;">
+                    <select id="font-selector" class="form-input" style="cursor: pointer;">
+                        <option value="'Inter', sans-serif" data-lang-key="fontDefault">Inter (Padrão)</option>
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="Verdana, sans-serif">Verdana</option>
+                    </select>
+                    <div style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-color-muted);" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M480-345 240-585l43-43 197 198 197-198 43 43-240 240Z"/></svg>
+                    </div>
+                </div>
+                <input type="text" id="custom-font-input" class="form-input" data-lang-key-placeholder="customFontPlaceholder">
+                <p class="input-hint" data-lang-key="customFontHint">A fonte deve estar instalada no seu sistema.</p>
+            </div>
+
+            <div class="border-t">
+                 <h3 class="widget-title" style="margin-bottom: 1rem;" data-lang-key="manageEngines">Gerenciar Buscadores</h3>
+                 <div id="engine-management-list" style="margin-bottom: 1rem;"></div>
+                 <button id="restore-engines-btn" class="btn btn-secondary" style="width: 100%; margin-bottom: 1rem; font-size: 0.875rem;" data-lang-key="restoreEngines">Restaurar Buscadores Padrão</button>
+                 <form id="add-engine-form">
+                     <input type="text" id="engine-name" required class="form-input" style="margin-bottom: 0.5rem;" data-lang-key-placeholder="engineNamePlaceholder">
+                     <input type="text" id="engine-url" required class="form-input" data-lang-key-placeholder="engineURLPlaceholder">
+                     <div id="engine-url-error" class="hidden" style="color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;" data-lang-key="engineURLError">A URL deve conter "%s".</div>
+                     <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" data-lang-key="add">Adicionar</button>
+                 </form>
+            </div>
+
+            <div class="border-t">
+                <p id="credits-text" style="font-size: 0.8rem; text-align: center; color: var(--text-color-muted);"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="add-site-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h2 class="modal-title" data-lang-key="addNewSite">Adicionar Novo Site</h2>
+            <form id="add-site-form" class="modal-form">
+                <input type="hidden" id="block-id-input">
+                <div>
+                    <label for="site-name" data-lang-key="siteName">Nome do Site</label>
+                    <input type="text" id="site-name" required class="form-input">
+                </div>
+                <div>
+                    <label for="site-url">URL</label>
+                    <input type="url" id="site-url" required placeholder="https://exemplo.com" class="form-input">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" data-lang-key="cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" data-lang-key="save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="edit-block-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h2 class="modal-title" data-lang-key="editBlockTitle">Editar Título do Bloco</h2>
+            <form id="edit-block-form" class="modal-form">
+                 <input type="hidden" id="edit-block-id-input">
+                <div>
+                    <label for="block-title-input" data-lang-key="blockTitle">Título do Bloco</label>
+                    <input type="text" id="block-title-input" required class="form-input">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" data-lang-key="cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" data-lang-key="save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirm-delete-modal" class="modal-overlay hidden">
+        <div class="modal confirm-modal">
+            <h2 class="modal-title" data-lang-key="confirmDeletion">Confirmar Exclusão</h2>
+            <p id="confirm-delete-message" class="muted-text" style="margin-bottom: 1.5rem; overflow: hidden; text-overflow: ellipsis;"></p>
+            <div class="modal-actions">
+                <button type="button" id="cancel-delete" class="btn btn-secondary" data-lang-key="cancel">Cancelar</button>
+                <button type="button" id="confirm-delete" class="btn btn-danger" data-lang-key="delete">Deletar</button>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="pomodoro-alert-sound" src="http://googleusercontent.com/file_content/0"></audio>
+
+    <!-- Otimização: Atributo 'defer' para não bloquear a renderização da página -->
+    <script defer>
+        const translations = {
+            en: {
+                pageTitle: "Home Page", settings: "Settings", theme: "Theme", font: "Font",
+                fontDefault: "Inter (Default)", customFontPlaceholder: "Enter font name", customFontHint: "Font must be installed.",
+                manageEngines: "Manage Search Engines", addEngine: "Add Search Engine",
+                engineNamePlaceholder: "Engine Name", engineURLPlaceholder: 'URL with "%s"', engineURLError: 'URL must contain "%s".',
+                add: "Add", searchPlaceholder: "Search the web...", search: "Search",
+                addNewSite: "Add New Site", siteName: "Site Name", cancel: "Cancel", save: "Save", confirmDeletion: "Confirm Deletion",
+                delete: "Delete", deleteSiteConfirm: 'Delete site "{name}"?', deleteEngineConfirm: 'Delete engine "{name}"?',
+                remove: "Remove", noCustomEngines: "No custom engines added.",
+                addBlock: "Add Block", editBlockTitle: "Edit Block Title", blockTitle: "Block Title", deleteBlockConfirm: 'Delete block "{name}" and all its links?',
+                editBlock: "Edit Block", deleteBlock: "Delete Block", addSiteToBlock: "Add Site to Block",
+                todoList: "To-Do List", newTodoPlaceholder: "Add a new task...", deleteTodoConfirm: 'Delete task "{name}"?', deleteTodo: "Delete Task",
+                pomodoro: "Pomodoro", work: "Work", shortBreak: "Break", longBreak: "Rest", start: "Start", pause: "Pause", reset: "Reset",
+                skipToWork: "Skip to Work", skipToShortBreak: "Skip to Short Break", skipToLongBreak: "Skip to Long Break",
+                toggleThemeDark: "Switch to Dark Mode", toggleThemeLight: "Switch to Light Mode", openSettings: "Open settings", closeSettings: "Close settings",
+                quickNotes: "Quick Notes", notesPlaceholder: "Write something here...", downloadNotes: "Download Notes",
+                downloadAsMD: "Download as .md", downloadAsTXT: "Download as .txt", openEditor: "Open in editor",
+                customColors: "Custom Colors", customColorsHint: "Colors are saved for the current theme (light/dark).",
+                colorPrimary: "Primary", colorBackground: "Background", colorText: "Text", colorCard: "Cards", colorBorder: "Borders", resetColors: "Reset Colors",
+                colorPlaceholder: "Placeholder", colorBtnPrimaryText: "Primary Btn Text", colorBtnPrimaryHoverBg: "Primary Btn Hover",
+                colorBtnSecondaryText: "Secondary Btn Text", colorBtnSecondaryBorder: "Secondary Btn Border", colorBtnSecondaryHoverBg: "Secondary Btn Hover BG", colorBtnSecondaryHoverText: "Secondary Btn Hover Text",
+                play: "Play", previousSong: "Previous Song", nextSong: "Next Song", noSong: "No song playing",
+                importSongs: "Import songs", togglePlaylist: "Toggle playlist", playlist: "Playlist",
+                deleteSongConfirm: 'Delete song "{name}"?', clearPlaylist: "Clear playlist",
+                clearPlaylistConfirm: "Are you sure you want to delete all songs from the playlist?",
+                noSongsInPlaylist: "No songs in playlist.",
+                restoreDefaultSongs: "Restore default songs",
+                toggleShuffle: "Toggle shuffle",
+                visibility: "Visibility",
+                enableMusicPlayer: "Enable Music Player",
+                showProductivityWidgets: "Show Notes & To-Do",
+                enablePomodoro: "Enable Pomodoro",
+                pomodoroAutoSwitch: "Auto-transition",
+                pomodoroAlertVolume: "Alert Volume",
+                background: "Background",
+                backgroundImageUrl: "Image URL",
+                imageUrlPlaceholder: "Paste image URL here...",
+                clearBackground: "Clear Background",
+                colorMutedText: "Muted Text",
+                colorDanger: "Danger Color",
+                colorCardHover: "Card Hover",
+                colorSliderTrack: "Slider Track",
+                colorSliderProgress: "Slider Progress",
+                colorSvgIcon: "Icon Color",
+                creditsText: 'Developed by <a href="{url}" target="_blank" rel="noopener noreferrer">Your Name</a>',
+                academicSearchText: 'For more specific results, try <a href="{url}" target="_blank" rel="noopener noreferrer">Academic Search</a>.',
+                academicSearchUrl: 'https://scholar.google.com/',
+                colorWidgetBg: "Widget Background",
+                colorFooterLink: "Footer Link",
+                restoreEngines: "Restore Default Engines",
+                restoreEnginesConfirm: "Are you sure you want to restore the default search engines? All custom engines will be deleted.",
+            },
+            pt: {
+                pageTitle: "Página Inicial", settings: "Configurações", theme: "Tema", font: "Fonte",
+                fontDefault: "Inter (Padrão)", customFontPlaceholder: "Digite o nome da fonte", customFontHint: "A fonte deve estar instalada.",
+                manageEngines: "Gerenciar Buscadores", addEngine: "Adicionar Buscador",
+                engineNamePlaceholder: "Nome do Buscador", engineURLPlaceholder: 'URL com "%s"', engineURLError: 'A URL deve conter "%s".',
+                add: "Adicionar", searchPlaceholder: "Pesquisar na web...", search: "Pesquisar",
+                addNewSite: "Adicionar Novo Site", siteName: "Nome do Site", cancel: "Cancelar", save: "Salvar", confirmDeletion: "Confirmar Exclusão",
+                delete: "Deletar", deleteSiteConfirm: 'Deletar o site "{name}"?', deleteEngineConfirm: 'Deletar o buscador "{name}"?',
+                remove: "Remover", noCustomEngines: "Nenhum buscador customizado.",
+                addBlock: "Adicionar Bloco", editBlockTitle: "Editar Título do Bloco", blockTitle: "Título do Bloco", deleteBlockConfirm: 'Deletar o bloco "{name}" e todos os seus links?',
+                editBlock: "Editar Bloco", deleteBlock: "Deletar Bloco", addSiteToBlock: "Adicionar Site ao Bloco",
+                todoList: "Lista de Tarefas", newTodoPlaceholder: "Adicionar nova tarefa...", deleteTodoConfirm: 'Deletar a tarefa "{name}"?', deleteTodo: "Deletar Tarefa",
+                pomodoro: "Pomodoro", work: "Trabalho", shortBreak: "Pausa", longBreak: "Descanso", start: "Iniciar", pause: "Pausar", reset: "Resetar",
+                skipToWork: "Pular para Trabalho", skipToShortBreak: "Pular para Pausa Curta", skipToLongBreak: "Pular para Descanso",
+                toggleThemeDark: "Mudar para Modo Escuro", toggleThemeLight: "Mudar para Modo Claro", openSettings: "Abrir configurações", closeSettings: "Fechar configurações",
+                quickNotes: "Notas Rápidas", notesPlaceholder: "Escreva algo aqui...", downloadNotes: "Baixar Notas",
+                downloadAsMD: "Baixar como .md", downloadAsTXT: "Baixar como .txt", openEditor: "Abrir em editor",
+                customColors: "Cores Customizadas", customColorsHint: "As cores são salvas para o tema atual (claro/escuro).",
+                colorPrimary: "Primária", colorBackground: "Fundo", colorText: "Texto", colorCard: "Cards", colorBorder: "Bordas", resetColors: "Resetar Cores",
+                colorPlaceholder: "Placeholder", colorBtnPrimaryText: "Texto Botão Primário", colorBtnPrimaryHoverBg: "Hover Botão Primário",
+                colorBtnSecondaryText: "Texto Botão Secundário", colorBtnSecondaryBorder: "Borda Botão Secundário", colorBtnSecondaryHoverBg: "Hover Fundo Secundário", colorBtnSecondaryHoverText: "Hover Texto Secundário",
+                play: "Tocar", previousSong: "Música anterior", nextSong: "Próxima música", noSong: "Nenhuma música tocando",
+                importSongs: "Importar músicas", togglePlaylist: "Alternar playlist", playlist: "Playlist",
+                deleteSongConfirm: 'Deletar a música "{name}"?', clearPlaylist: "Limpar playlist",
+                clearPlaylistConfirm: "Tem certeza que deseja deletar todas as músicas da playlist?",
+                noSongsInPlaylist: "Nenhuma música na playlist.",
+                restoreDefaultSongs: "Restaurar músicas padrão",
+                toggleShuffle: "Alternar modo aleatório",
+                visibility: "Visibilidade",
+                enableMusicPlayer: "Habilitar Player de Música",
+                showProductivityWidgets: "Exibir Notas e Tarefas",
+                enablePomodoro: "Habilitar Pomodoro",
+                pomodoroAutoSwitch: "Transição Automática",
+                pomodoroAlertVolume: "Volume do Alerta",
+                background: "Plano de Fundo",
+                backgroundImageUrl: "URL da Imagem",
+                imageUrlPlaceholder: "Cole a URL da imagem aqui...",
+                clearBackground: "Limpar Plano de Fundo",
+                colorMutedText: "Texto Destacado",
+                colorDanger: "Cor de Exclusão",
+                colorCardHover: "Hover do Card",
+                colorSliderTrack: "Trilha do Slider",
+                colorSliderProgress: "Progresso do Slider",
+                colorSvgIcon: "Cor dos Ícones",
+                creditsText: 'Desenvolvido por <a href="{url}" target="_blank" rel="noopener noreferrer">Seu Nome</a>',
+                academicSearchText: 'Para resultados mais específicos, tente a <a href="{url}" target="_blank" rel="noopener noreferrer">Pesquisa Acadêmica</a>.',
+                academicSearchUrl: 'https://scholar.google.com.br/',
+                colorWidgetBg: "Fundo dos Widgets",
+                colorFooterLink: "Link do Rodapé",
+                restoreEngines: "Restaurar Buscadores Padrão",
+                restoreEnginesConfirm: "Tem certeza que deseja restaurar os buscadores padrão? Todos os buscadores customizados serão apagados.",
+            }
+        };
+
+        const defaultSearchEnginesData = [
+            { name: 'Google', url: 'https://www.google.com/search?q=%s' },
+            { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=%s' },
+            { name: 'Bing', url: 'https://www.bing.com/search?q=%s' },
+            { name: 'Yandex', url: 'https://yandex.com/search/?text=%s' }
+        ];
+        
+        const svgs = {
+            play: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M187.2 100.9C174.8 94.1 159.8 94.4 147.6 101.6C135.4 108.8 128 121.9 128 136L128 504C128 518.1 135.5 531.2 147.6 538.4C159.7 545.6 174.8 545.9 187.2 539.1L523.2 355.1C536 348.1 544 334.6 544 320C544 305.4 536 291.9 523.2 284.9L187.2 100.9z"/></svg>',
+            pause: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M176 96C149.5 96 128 117.5 128 144L128 496C128 522.5 149.5 544 176 544L240 544C266.5 544 288 522.5 288 496L288 144C288 117.5 266.5 96 240 96L176 96zM400 96C373.5 96 352 117.5 352 144L352 496C352 522.5 373.5 544 400 544L464 544C490.5 544 512 522.5 512 496L512 144C512 117.5 490.5 96 464 96L400 96z"/></svg>',
+            volumeHigh: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M533.6 96.5C523.3 88.1 508.2 89.7 499.8 100C491.4 110.3 493 125.4 503.3 133.8C557.5 177.8 592 244.8 592 320C592 395.2 557.5 462.2 503.3 506.3C493 514.7 491.5 529.8 499.8 540.1C508.1 550.4 523.3 551.9 533.6 543.6C598.5 490.7 640 410.2 640 320C640 229.8 598.5 149.2 533.6 96.5zM473.1 171C462.8 162.6 447.7 164.2 439.3 174.5C430.9 184.8 432.5 199.9 442.8 208.3C475.3 234.7 496 274.9 496 320C496 365.1 475.3 405.3 442.8 431.8C432.5 440.2 431 455.3 439.3 465.6C447.6 475.9 462.8 477.4 473.1 469.1C516.3 433.9 544 380.2 544 320.1C544 260 516.3 206.3 473.1 171.1zM412.6 245.5C402.3 237.1 387.2 238.7 378.8 249C370.4 259.3 372 274.4 382.3 282.8C393.1 291.6 400 305 400 320C400 335 393.1 348.4 382.3 357.3C372 365.7 370.5 380.8 378.8 391.1C387.1 401.4 402.3 402.9 412.6 394.6C434.1 376.9 448 350.1 448 320C448 289.9 434.1 263.1 412.6 245.5zM80 416L128 416L262.1 535.2C268.5 540.9 276.7 544 285.2 544C304.4 544 320 528.4 320 509.2L320 130.8C320 111.6 304.4 96 285.2 96C276.7 96 268.5 99.1 262.1 104.8L128 224L80 224C53.5 224 32 245.5 32 272L32 368C32 394.5 53.5 416 80 416z"/></svg>',
+            volumeLow: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M144 416L192 416L326.1 535.2C332.5 540.9 340.7 544 349.2 544C368.4 544 384 528.4 384 509.2L384 130.8C384 111.6 368.4 96 349.2 96C340.7 96 332.5 99.1 326.1 104.8L192 224L144 224C117.5 224 96 245.5 96 272L96 368C96 394.5 117.5 416 144 416zM476.6 245.5C466.3 237.1 451.2 238.7 442.8 249C434.4 259.3 436 274.4 446.3 282.8C457.1 291.6 464 305 464 320C464 335 457.1 348.4 446.3 357.3C436 365.7 434.5 380.8 442.8 391.1C451.1 401.4 466.3 402.9 476.6 394.6C498.1 376.9 512 350.1 512 320C512 289.9 498.1 263.1 476.5 245.5z"/></svg>',
+            volumeMute: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M80 416L128 416L262.1 535.2C268.5 540.9 276.7 544 285.2 544C304.4 544 320 528.4 320 509.2L320 130.8C320 111.6 304.4 96 285.2 96C276.7 96 268.5 99.1 262.1 104.8L128 224L80 224C53.5 224 32 245.5 32 272L32 368C32 394.5 53.5 416 80 416zM399 239C389.6 248.4 389.6 263.6 399 272.9L446 319.9L399 366.9C389.6 376.3 389.6 391.5 399 400.8C408.4 410.1 423.6 410.2 432.9 400.8L479.9 353.8L526.9 400.8C536.3 410.2 551.5 410.2 560.8 400.8C570.1 391.4 570.2 376.2 560.8 366.9L513.8 319.9L560.8 272.9C570.2 263.5 570.2 248.3 560.8 239C551.4 229.7 536.2 229.6 526.9 239L479.9 286L432.9 239C423.5 229.6 408.3 229.6 399 239z"/></svg>',
+            pomodoroPlay: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M187.2 100.9C174.8 94.1 159.8 94.4 147.6 101.6C135.4 108.8 128 121.9 128 136L128 504C128 518.1 135.5 531.2 147.6 538.4C159.7 545.6 174.8 545.9 187.2 539.1L523.2 355.1C536 348.1 544 334.6 544 320C544 305.4 536 291.9 523.2 284.9L187.2 100.9z"/></svg>',
+            pomodoroPause: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M176 96C149.5 96 128 117.5 128 144L128 496C128 522.5 149.5 544 176 544L240 544C266.5 544 288 522.5 288 496L288 144C288 117.5 266.5 96 240 96L176 96zM400 96C373.5 96 352 117.5 352 144L352 496C352 522.5 373.5 544 400 544L464 544C490.5 544 512 522.5 512 496L512 144C512 117.5 490.5 96 464 96L400 96z"/></svg>',
+            trash: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M504.6 148.5C515.9 134.9 514.1 114.7 500.5 103.4C486.9 92.1 466.7 93.9 455.4 107.5L320 270L184.6 107.5C173.3 93.9 153.1 92.1 139.5 103.4C125.9 114.7 124.1 134.9 135.4 148.5L278.3 320L135.4 491.5C124.1 505.1 125.9 525.3 139.5 536.6C153.1 547.9 173.3 546.1 184.6 532.5L320 370L455.4 532.5C466.7 546.1 486.9 547.9 500.5 536.6C514.1 525.3 515.9 505.1 504.6 491.5L361.7 320L504.6 148.5z"/></svg>',
+            search: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>',
+            plus: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>',
+            pencil: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M416.9 85.2L372 130.1L509.9 268L554.8 223.1C568.4 209.6 576 191.2 576 172C576 152.8 568.4 134.4 554.8 120.9L519.1 85.2C505.6 71.6 487.2 64 468 64C448.8 64 430.4 71.6 416.9 85.2zM338.1 164L122.9 379.1C112.2 389.8 104.4 403.2 100.3 417.8L64.9 545.6C62.6 553.9 64.9 562.9 71.1 569C77.3 575.1 86.2 577.5 94.5 575.2L222.3 539.7C236.9 535.6 250.2 527.9 261 517.1L476 301.9L338.1 164z"/></svg>',
+            times: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="currentColor" d="M504.6 148.5C515.9 134.9 514.1 114.7 500.5 103.4C486.9 92.1 466.7 93.9 455.4 107.5L320 270L184.6 107.5C173.3 93.9 153.1 92.1 139.5 103.4C125.9 114.7 124.1 134.9 135.4 148.5L278.3 320L135.4 491.5C124.1 505.1 125.9 525.3 139.5 536.6C153.1 547.9 173.3 546.1 184.6 532.5L320 370L455.4 532.5C466.7 546.1 486.9 547.9 500.5 536.6C514.1 525.3 515.9 505.1 504.6 491.5L361.7 320L504.6 148.5z"/></svg>'
+        };
+
+        function T(key, replacements = {}) {
+            const lang = localStorage.getItem('language') || 'pt';
+            let text = translations[lang][key] || translations['en'][key] || key;
+            const links = { 
+                credits: 'https://github.com/seu-usuario', 
+                academicSearch: translations[lang]['academicSearchUrl'] || translations['en']['academicSearchUrl']
+            };
+            replacements.url = links[key.replace('Text', '')];
+            for (const placeholder in replacements) { text = text.replace(`{${placeholder}}`, replacements[placeholder]); }
+            return text;
+        }
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                const childSpan = el.querySelector('span[data-lang-key]');
+                if (childSpan) { childSpan.textContent = T(childSpan.getAttribute('data-lang-key')); } 
+                else if (el.children.length === 0 || !el.querySelector('svg')) { el.textContent = T(key); }
+            });
+            document.querySelectorAll('[data-lang-key-placeholder]').forEach(el => el.placeholder = T(el.getAttribute('data-lang-key-placeholder')));
+            document.querySelectorAll('[data-lang-key-aria]').forEach(el => el.setAttribute('aria-label', T(el.getAttribute('data-lang-key-aria'))));
+            
+            document.getElementById('credits-text').innerHTML = T('creditsText');
+            document.getElementById('academic-search-text').innerHTML = T('academicSearchText');
+            
+            document.title = T('pageTitle');
+            updateThemeToggleButton();
+            updatePomodoroButton();
+        }
+
+        const getData = (key, defaultValue) => { try { const item = localStorage.getItem(key); return item ? JSON.parse(item) : defaultValue; } catch (e) { return defaultValue; } };
+        const setData = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { console.error(e); } };
+
+        const contentWrapper = document.getElementById('widgets-and-links-container');
+        const settingsToggle = document.getElementById('settings-toggle');
+        const settingsPanel = document.getElementById('settings-panel');
+        const closeSettings = document.getElementById('close-settings');
+        const confirmDeleteModal = document.getElementById('confirm-delete-modal');
+        let deleteResolver = null;
+        let lastFocusedElement = null;
+
+        function trapFocus(element) {
+            const focusableEls = Array.from(element.querySelectorAll('a, button, textarea, input, select')).filter(el => el.offsetParent !== null);
+            if (focusableEls.length === 0) return;
+            const firstFocusableEl = focusableEls[0];
+            const lastFocusableEl = focusableEls[focusableEls.length - 1];
+            element.addEventListener('keydown', e => {
+                if (e.key !== 'Tab') return;
+                if (e.shiftKey) { if (document.activeElement === firstFocusableEl) { lastFocusableEl.focus(); e.preventDefault(); } } 
+                else { if (document.activeElement === lastFocusableEl) { firstFocusableEl.focus(); e.preventDefault(); } }
+            });
+        }
+        
+        function openModal(modal, opener) {
+            lastFocusedElement = opener || document.activeElement;
+            modal.classList.remove('hidden');
+            contentWrapper.setAttribute('aria-hidden', 'true');
+            const focusTarget = modal.querySelector('input, button, textarea, select');
+            if (focusTarget) focusTarget.focus();
+            trapFocus(modal);
+        }
+
+        function closeModal(modal) {
+            modal.classList.add('hidden');
+            contentWrapper.setAttribute('aria-hidden', 'false');
+            if(lastFocusedElement) lastFocusedElement.focus();
+        }
+
+        function updateThemeToggleButton() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const isDark = document.documentElement.classList.contains('dark');
+            themeToggle.textContent = isDark ? T('toggleThemeLight') : T('toggleThemeDark');
+        }
+
+        async function confirmDeletion(opener, message) {
+            document.getElementById('confirm-delete-message').textContent = message;
+            openModal(confirmDeleteModal, opener);
+            return new Promise(resolve => { deleteResolver = resolve; });
+        }
+        
+        const musicPlayer = {
+            audio: new Audio(),
+            playlist: [],
+            currentIndex: -1,
+            isPlaying: false,
+            isShuffle: false,
+            defaultSongs: [
+                { name: "Lofi Chill", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+                { name: "Upbeat Funk", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" }
+            ],
+            playPauseBtn: document.getElementById('play-pause-music-btn'),
+            prevBtn: document.getElementById('prev-music-btn'),
+            nextBtn: document.getElementById('next-music-btn'),
+            shuffleBtn: document.getElementById('shuffle-music-btn'),
+            trackInfo: document.getElementById('music-track-info'),
+            seekSlider: document.getElementById('music-seek-slider'),
+            currentTimeEl: document.getElementById('music-time'),
+            durationEl: document.getElementById('music-duration'),
+            importInput: document.getElementById('import-music-input'),
+            togglePlaylistBtn: document.getElementById('toggle-playlist-btn'),
+            playlistPanel: document.getElementById('playlist-panel'),
+            playlistList: document.getElementById('playlist-list'),
+            volumeSlider: document.getElementById('music-volume-slider'),
+            volumeIconContainer: document.getElementById('music-volume-icon'),
+            clearPlaylistBtn: document.getElementById('clear-playlist-btn'),
+            restoreSongsBtn: document.getElementById('restore-default-songs-btn'),
+
+            init() {
+                this.addEventListeners();
+                this.loadInitialSongs();
+                this.audio.volume = this.volumeSlider.value;
+                this.updateVolumeIcon();
+                this.renderPlaylist();
+                if (this.playlist.length > 0) { this.loadSong(0); } 
+                else { this.updateUI(); }
+                this.updateSliderBackground(this.seekSlider);
+                this.updateSliderBackground(this.volumeSlider);
+            },
+            
+            loadInitialSongs() { this.playlist.push(...this.defaultSongs); },
+
+            addEventListeners() {
+                this.playPauseBtn.addEventListener('click', () => this.togglePlayPause());
+                this.nextBtn.addEventListener('click', () => this.nextSong());
+                this.prevBtn.addEventListener('click', () => this.prevSong());
+                this.shuffleBtn.addEventListener('click', () => this.toggleShuffle());
+                this.importInput.addEventListener('change', (e) => this.importSongs(e));
+                this.togglePlaylistBtn.addEventListener('click', (e) => { e.stopPropagation(); this.playlistPanel.classList.toggle('visible'); });
+                this.clearPlaylistBtn.addEventListener('click', () => this.handleClearPlaylist());
+                this.restoreSongsBtn.addEventListener('click', () => this.restoreDefaultSongs());
+                this.volumeSlider.addEventListener('input', (e) => this.setVolume(e));
+                this.audio.addEventListener('volumechange', () => this.updateVolumeIcon());
+                this.audio.addEventListener('ended', () => this.nextSong());
+                this.audio.addEventListener('timeupdate', () => this.updateProgress());
+                this.audio.addEventListener('loadedmetadata', () => this.updateProgress());
+                this.seekSlider.addEventListener('input', (e) => this.seek(e));
+            },
+
+            loadSong(index) {
+                if (index < 0 || index >= this.playlist.length) return;
+                this.currentIndex = index;
+                const song = this.playlist[this.currentIndex];
+                this.audio.src = song.url; 
+                this.trackInfo.textContent = song.name;
+                this.updateUI();
+            },
+
+            renderPlaylist() {
+                this.playlistList.innerHTML = '';
+                if (this.playlist.length === 0) {
+                    this.playlistList.innerHTML = `<li style="padding: 1rem; text-align: center; color: var(--text-color-muted); font-size: 0.875rem;">${T('noSongsInPlaylist')}</li>`; 
+                    return;
+                }
+                this.playlist.forEach((song, index) => {
+                    const li = document.createElement('li');
+                    li.className = `playlist-item ${index === this.currentIndex ? 'playing' : ''}`;
+                    li.innerHTML = `<span class="playlist-item-name">${song.name}</span><button class="delete-music-btn" data-index="${index}" aria-label="${T('deleteSongConfirm', {name: song.name})}">${svgs.times}</button>`;
+                    li.addEventListener('click', (e) => {
+                        if (e.target.closest('.delete-music-btn')) return;
+                        this.loadSong(index);
+                        this.play();
+                    });
+                    li.querySelector('.delete-music-btn').addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const confirmed = await confirmDeletion(e.currentTarget, T('deleteSongConfirm', {name: song.name}));
+                        if(confirmed) { this.deleteSong(index); }
+                    });
+                    this.playlistList.appendChild(li);
+                });
+            },
+
+            updateUI() {
+                if (this.currentIndex === -1 || !this.playlist[this.currentIndex]) {
+                    this.trackInfo.textContent = T('noSong');
+                    this.trackInfo.setAttribute('data-lang-key', 'noSong');
+                    this.playPauseBtn.innerHTML = svgs.play;
+                    this.playPauseBtn.setAttribute('aria-label', T('play'));
+                    this.renderPlaylist();
+                    return;
+                }
+                this.trackInfo.removeAttribute('data-lang-key');
+                this.trackInfo.textContent = this.playlist[this.currentIndex].name;
+                this.playPauseBtn.innerHTML = this.isPlaying ? svgs.pause : svgs.play;
+                this.playPauseBtn.setAttribute('aria-label', T(this.isPlaying ? 'pause' : 'play'));
+                this.renderPlaylist();
+            },
+
+            togglePlayPause() {
+                if (this.currentIndex === -1 && this.playlist.length > 0) { this.loadSong(0); }
+                if (this.currentIndex === -1) return;
+                this.isPlaying ? this.pause() : this.play();
+            },
+
+            play() {
+                if (!this.audio.src || !this.playlist[this.currentIndex]) return;
+                this.audio.play().then(() => { this.isPlaying = true; this.updateUI(); }).catch(error => { console.error("Error playing audio:", error); this.isPlaying = false; this.updateUI(); });
+            },
+
+            pause() { this.isPlaying = false; this.audio.pause(); this.updateUI(); },
+
+            nextSong() {
+                if (this.playlist.length === 0) return;
+                let newIndex;
+                if (this.isShuffle) {
+                    if (this.playlist.length === 1) { newIndex = 0; } 
+                    else { do { newIndex = Math.floor(Math.random() * this.playlist.length); } while (newIndex === this.currentIndex); }
+                } else { newIndex = (this.currentIndex + 1) % this.playlist.length; }
+                this.loadSong(newIndex);
+                if (this.isPlaying || this.audio.ended) this.play();
+            },
+
+            prevSong() {
+                if (this.playlist.length === 0) return;
+                let newIndex = (this.currentIndex - 1 + this.playlist.length) % this.playlist.length;
+                this.loadSong(newIndex);
+                if (this.isPlaying) this.play();
+            },
+
+            toggleShuffle() { this.isShuffle = !this.isShuffle; this.shuffleBtn.classList.toggle('active', this.isShuffle); },
+
+            importSongs(e) {
+                const files = e.target.files;
+                if (!files.length) return;
+                Array.from(files).forEach(file => { this.playlist.push({ name: file.name.replace(/\.[^/.]+$/, ""), url: URL.createObjectURL(file), isLocal: true }); });
+                this.renderPlaylist();
+                if (this.currentIndex === -1) this.loadSong(this.playlist.length - 1);
+                e.target.value = ''; 
+            },
+            
+            deleteSong(index) {
+                if (index < 0 || index >= this.playlist.length) return;
+                const wasPlaying = this.isPlaying;
+                const deletedCurrentSong = index === this.currentIndex;
+                if (this.playlist[index].isLocal) { URL.revokeObjectURL(this.playlist[index].url); }
+                this.playlist.splice(index, 1);
+                if (deletedCurrentSong) {
+                    this.isPlaying = false;
+                    this.audio.pause();
+                    this.audio.src = '';
+                    if (this.playlist.length === 0) { this.currentIndex = -1; } 
+                    else {
+                        this.currentIndex = index >= this.playlist.length ? 0 : index;
+                        this.loadSong(this.currentIndex);
+                        if (wasPlaying) { this.play(); }
+                    }
+                } else { if (index < this.currentIndex) { this.currentIndex--; } }
+                this.updateUI();
+                this.updateProgress();
+            },
+            
+            async handleClearPlaylist() {
+                if (this.playlist.length === 0) return;
+                const confirmed = await confirmDeletion(this.clearPlaylistBtn, T('clearPlaylistConfirm'));
+                if (confirmed) this.clearPlaylist();
+            },
+
+            clearPlaylist() {
+                this.pause();
+                this.playlist.forEach(song => { if (song.isLocal) URL.revokeObjectURL(song.url); });
+                this.playlist = [];
+                this.audio.src = '';
+                this.currentIndex = -1;
+                this.updateUI();
+                this.updateProgress();
+                this.renderPlaylist();
+            },
+            
+            restoreDefaultSongs() {
+                this.defaultSongs.forEach(defaultSong => { if (!this.playlist.some(p => p.url === defaultSong.url)) this.playlist.push(defaultSong); });
+                this.renderPlaylist();
+                if (this.currentIndex === -1 && this.playlist.length > 0) this.loadSong(0);
+            },
+
+            setVolume(e) { this.audio.volume = e.target.value; this.updateSliderBackground(this.volumeSlider); },
+
+            updateVolumeIcon() {
+                const volume = this.audio.volume;
+                if (volume === 0) this.volumeIconContainer.innerHTML = svgs.volumeMute;
+                else if (volume < 0.5) this.volumeIconContainer.innerHTML = svgs.volumeLow;
+                else this.volumeIconContainer.innerHTML = svgs.volumeHigh;
+            },
+
+            formatTime(seconds) {
+                const min = Math.floor(seconds / 60);
+                const sec = Math.floor(seconds % 60);
+                return `${min}:${String(sec).padStart(2, '0')}`;
+            },
+
+            updateProgress() {
+                const { duration, currentTime } = this.audio;
+                if (!isNaN(duration)) {
+                    this.durationEl.textContent = this.formatTime(duration);
+                    this.currentTimeEl.textContent = this.formatTime(currentTime);
+                    this.seekSlider.value = (currentTime / duration) * 100 || 0;
+                } else {
+                    this.durationEl.textContent = '0:00';
+                    this.currentTimeEl.textContent = '0:00';
+                    this.seekSlider.value = 0;
+                }
+                this.updateSliderBackground(this.seekSlider);
+            },
+            
+            seek(e) {
+                const { duration } = this.audio;
+                if (!isNaN(duration)) this.audio.currentTime = (e.target.value / 100) * duration;
+                this.updateSliderBackground(this.seekSlider);
+            },
+
+            updateSliderBackground(slider) {
+                const min = slider.min || 0;
+                const max = slider.max || 100;
+                const value = slider.value;
+                const progress = ((value - min) / (max - min)) * 100;
+                slider.style.backgroundSize = `${progress}% 100%`;
+            }
+        };
+
+        const pomodoro = {
+            timerDisplay: document.getElementById('pomodoro-timer-display'),
+            startPauseBtn: document.getElementById('start-pause-pomodoro'),
+            resetBtn: document.getElementById('reset-pomodoro'),
+            skipToWorkBtn: document.getElementById('skip-to-work'),
+            skipToShortBreakBtn: document.getElementById('skip-to-short-break'),
+            skipToLongBreakBtn: document.getElementById('skip-to-long-break'),
+            workDurationInput: document.getElementById('pomodoro-work-duration'),
+            shortBreakInput: document.getElementById('pomodoro-short-break'),
+            longBreakInput: document.getElementById('pomodoro-long-break'),
+            autoSwitchInput: document.getElementById('toggle-pomodoro-auto-switch'),
+            alertSound: document.getElementById('pomodoro-alert-sound'),
+            alertVolumeSlider: document.getElementById('pomodoro-alert-volume'),
+            interval: null, isRunning: false, timeLeft: 0, mode: 'work', sessions: 0,
+            durations: { work: 25 * 60, shortBreak: 5 * 60, longBreak: 15 * 60 },
+            autoSwitchEnabled: true,
+
+            init() {
+                this.durations.work = getData('pomodoro_work', 25) * 60;
+                this.durations.shortBreak = getData('pomodoro_shortBreak', 5) * 60;
+                this.durations.longBreak = getData('pomodoro_longBreak', 15) * 60;
+                this.autoSwitchEnabled = getData('pomodoro_autoSwitch', true);
+                const savedVolume = getData('pomodoro_volume', 0.5);
+
+                this.workDurationInput.value = this.durations.work / 60;
+                this.shortBreakInput.value = this.durations.shortBreak / 60;
+                this.longBreakInput.value = this.durations.longBreak / 60;
+                this.autoSwitchInput.checked = this.autoSwitchEnabled;
+                this.alertVolumeSlider.value = savedVolume;
+                this.alertSound.volume = savedVolume;
+
+                this.reset();
+                this.addEventListeners();
+                musicPlayer.updateSliderBackground(this.alertVolumeSlider);
+            },
+            
+            addEventListeners() {
+                this.startPauseBtn.addEventListener('click', () => this.toggle());
+                this.resetBtn.addEventListener('click', () => this.reset());
+                this.skipToWorkBtn.addEventListener('click', () => this.skipTo('work'));
+                this.skipToShortBreakBtn.addEventListener('click', () => this.skipTo('shortBreak'));
+                this.skipToLongBreakBtn.addEventListener('click', () => this.skipTo('longBreak'));
+                this.workDurationInput.addEventListener('change', (e) => this.updateDuration('work', e.target.value));
+                this.shortBreakInput.addEventListener('change', (e) => this.updateDuration('shortBreak', e.target.value));
+                this.longBreakInput.addEventListener('change', (e) => this.updateDuration('longBreak', e.target.value));
+                this.autoSwitchInput.addEventListener('change', (e) => {
+                    this.autoSwitchEnabled = e.target.checked;
+                    setData('pomodoro_autoSwitch', this.autoSwitchEnabled);
+                });
+                this.alertVolumeSlider.addEventListener('input', (e) => {
+                    const newVolume = e.target.value;
+                    this.alertSound.volume = newVolume;
+                    setData('pomodoro_volume', newVolume);
+                    musicPlayer.updateSliderBackground(this.alertVolumeSlider);
+                });
+            },
+
+            updateDuration(type, value) {
+                const minutes = parseInt(value, 10);
+                if (minutes > 0) {
+                    this.durations[type] = minutes * 60;
+                    setData(`pomodoro_${type}`, minutes);
+                    if (!this.isRunning && this.mode === type) {
+                        this.timeLeft = this.durations[type];
+                        this.updateDisplay();
+                    }
+                }
+            },
+
+            toggle() { this.isRunning ? this.pause() : this.start(); },
+            start() { if (!this.isRunning) { this.isRunning = true; this.interval = setInterval(() => this.tick(), 1000); updatePomodoroButton(); }},
+            pause() { if (this.isRunning) { this.isRunning = false; clearInterval(this.interval); this.interval = null; updatePomodoroButton(); }},
+            skipTo(mode) { this.pause(); this.mode = mode; this.timeLeft = this.durations[this.mode]; this.updateDisplay(); },
+            reset() { this.pause(); this.mode = 'work'; this.sessions = 0; this.timeLeft = this.durations.work; this.updateDisplay(); },
+
+            tick() {
+                this.timeLeft--;
+                this.updateDisplay();
+                if (this.timeLeft <= 0) {
+                    this.pause();
+                    this.playSound();
+                    this.switchMode();
+                }
+            },
+
+            switchMode() {
+                this.mode = (this.mode === 'work') ? ((++this.sessions % 4 === 0) ? 'longBreak' : 'shortBreak') : 'work';
+                this.timeLeft = this.durations[this.mode];
+                this.updateDisplay();
+                if (this.autoSwitchEnabled) { this.start(); }
+            },
+
+            updateDisplay() {
+                const minutes = Math.floor(this.timeLeft / 60);
+                const seconds = this.timeLeft % 60;
+                this.timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                document.title = this.isRunning ? `${this.timerDisplay.textContent} - ${T(this.mode)} | ${T('pageTitle')}` : T('pageTitle');
+            },
+            
+            playSound() {
+                try {
+                    this.alertSound.currentTime = 0;
+                    this.alertSound.play().catch(e => console.error("Erro ao tocar som do Pomodoro:", e));
+                } catch (e) { console.error("Não foi possível tocar o som:", e); }
+            }
+        };
+        
+        function updatePomodoroButton() {
+            const btn = document.getElementById('start-pause-pomodoro');
+            const btnSpan = btn.querySelector('span');
+            const btnIconContainer = btn.querySelector('.pomodoro-icon-container');
+            if (pomodoro.isRunning) {
+                btnIconContainer.innerHTML = svgs.pomodoroPause;
+                btnSpan.textContent = T('pause');
+            } else {
+                btnIconContainer.innerHTML = svgs.pomodoroPlay;
+                btnSpan.textContent = T('start');
+            }
+        }
+
+        const colorMappings = [
+            { id: 'color-bg', variable: '--bg-color', key: 'colorBackground' },
+            { id: 'color-text', variable: '--text-color', key: 'colorText' },
+            { id: 'color-text-muted', variable: '--text-color-muted', key: 'colorMutedText' },
+            { id: 'color-card', variable: '--card-bg-color', key: 'colorCard' },
+            { id: 'color-card-hover', variable: '--card-hover-bg-color', key: 'colorCardHover' },
+            { id: 'color-border', variable: '--border-color', key: 'colorBorder' },
+            { id: 'color-placeholder', variable: '--placeholder-text-color', key: 'colorPlaceholder' },
+            { id: 'color-primary', variable: '--accent-color', key: 'colorPrimary' },
+            { id: 'color-danger', variable: '--danger-color', key: 'colorDanger' },
+            { id: 'color-slider-track', variable: '--slider-track-color', key: 'colorSliderTrack' },
+            { id: 'color-slider-progress', variable: '--slider-progress-color', key: 'colorSliderProgress' },
+            { id: 'color-widget-bg', variable: '--widget-bg-color', key: 'colorWidgetBg' },
+            { id: 'color-footer-link', variable: '--footer-link-color', key: 'colorFooterLink' },
+        ];
+
+        function createColorInputs() {
+            const container = document.getElementById('color-inputs-container');
+            container.innerHTML = '';
+            colorMappings.forEach(mapping => {
+                const div = document.createElement('div');
+                div.className = 'flex-between';
+                div.innerHTML = `<label for="${mapping.id}" class="label-sm" data-lang-key="${mapping.key}">${T(mapping.key)}</label><input type="color" id="${mapping.id}">`;
+                container.appendChild(div);
+            });
+            container.style.display = 'flex';
+            container.style.flexDirection = 'column';
+            container.style.gap = '0.75rem';
+        }
+
+        function applyCustomColors(mode) {
+            const customColors = getData('customColors', { light: {}, dark: {} });
+            const modeColors = customColors[mode] || {};
+            for (const variable in modeColors) document.documentElement.style.setProperty(variable, modeColors[variable]);
+        }
+
+        function loadCustomColors() {
+            const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            document.documentElement.style.cssText = '';
+            applyCustomColors(mode);
+            colorMappings.forEach(mapping => {
+                const input = document.getElementById(mapping.id);
+                if (input) input.value = getComputedStyle(document.documentElement).getPropertyValue(mapping.variable).trim();
+            });
+        }
+
+        function setupColorPickers() {
+            colorMappings.forEach(mapping => {
+                const input = document.getElementById(mapping.id);
+                if(input) {
+                    input.addEventListener('input', (e) => {
+                        const newColor = e.target.value;
+                        const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                        document.documentElement.style.setProperty(mapping.variable, newColor);
+                        const customColors = getData('customColors', { light: {}, dark: {} });
+                        if (!customColors[mode]) customColors[mode] = {};
+                        customColors[mode][mapping.variable] = newColor;
+                        setData('customColors', customColors);
+                    });
+                }
+            });
+        }
+        
+        function initializeSearchEngines() {
+            let engines = getData('searchEngines');
+            if (!engines || !Array.isArray(engines) || engines.length === 0) {
+                setData('searchEngines', defaultSearchEnginesData);
+                engines = defaultSearchEnginesData;
+            }
+            return engines;
+        }
+
+        function renderEngineManagementList() {
+            const listContainer = document.getElementById('engine-management-list');
+            const engines = getData('searchEngines', []);
+            listContainer.innerHTML = '';
+            listContainer.style.display = 'flex';
+            listContainer.style.flexDirection = 'column';
+            listContainer.style.gap = '0.5rem';
+
+            if (engines.length === 0) {
+                listContainer.innerHTML = `<p class="muted-text" style="font-size: 0.875rem;">${T('noCustomEngines')}</p>`;
+                return;
+            }
+
+            engines.forEach((engine, index) => {
+                const engineEl = document.createElement('div');
+                engineEl.className = 'flex-between';
+                engineEl.style.padding = '0.5rem';
+                engineEl.style.borderRadius = '0.5rem';
+                engineEl.style.backgroundColor = 'var(--card-bg-color)';
+                engineEl.innerHTML = `
+                    <span style="font-weight: 600; overflow: hidden; text-overflow: ellipsis; padding-right: 0.5rem;">${engine.name}</span>
+                    <button class="remove-engine-btn btn btn-danger btn-icon" style="padding: 4px; font-size: 0.75rem;" data-index="${index}" data-lang-key-aria="remove" aria-label="${T('remove')} ${engine.name}" ${engines.length <= 1 ? 'disabled' : ''}>
+                        ${svgs.trash}
+                    </button>`;
+                listContainer.appendChild(engineEl);
+            });
+
+            listContainer.querySelectorAll('.remove-engine-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const indexToRemove = parseInt(e.currentTarget.dataset.index, 10);
+                    let currentEngines = getData('searchEngines', []);
+                    const engineToRemove = currentEngines[indexToRemove];
+                    confirmDeletion(e.currentTarget, T('deleteEngineConfirm', {name: engineToRemove.name})).then(confirmed => {
+                        if (confirmed) {
+                            currentEngines.splice(indexToRemove, 1);
+                            setData('searchEngines', currentEngines);
+                            const activeEngineName = localStorage.getItem('searchEngine');
+                            if (activeEngineName === engineToRemove.name) {
+                                localStorage.setItem('searchEngine', currentEngines.length > 0 ? currentEngines[0].name : '');
+                            }
+                            renderEngineManagementList();
+                            renderSearchEngines();
+                        }
+                    });
+                });
+            });
+        }
+
+        function renderSearchEngines() {
+            const searchEnginesContainer = document.getElementById('search-engines');
+            const allSearchEngines = getData('searchEngines', []);
+            let currentSearchEngineName = localStorage.getItem('searchEngine');
+            let currentSearchEngine = allSearchEngines.find(e => e.name === currentSearchEngineName);
+            if (!currentSearchEngine) {
+                currentSearchEngine = allSearchEngines[0];
+                if (currentSearchEngine) { localStorage.setItem('searchEngine', currentSearchEngine.name); } 
+                else { localStorage.removeItem('searchEngine'); }
+            }
+            searchEnginesContainer.innerHTML = '';
+            allSearchEngines.forEach(engine => {
+                const button = document.createElement('button');
+                button.className = `btn search-engine`;
+                button.innerHTML = `${svgs.search} <span class="search-engine-name" style="max-width: 120px; overflow: hidden; text-overflow: ellipsis;">${engine.name}</span>`;
+                if (currentSearchEngine && engine.name === currentSearchEngine.name) { button.classList.add('active'); }
+                button.addEventListener('click', () => {
+                    localStorage.setItem('searchEngine', engine.name);
+                    renderSearchEngines();
+                });
+                searchEnginesContainer.appendChild(button);
+            });
+        }
+
+        function renderLinkBlocks() {
+            const linkBlocksSection = document.getElementById('link-blocks-section');
+            const blocks = getData('linkBlocks', []);
+            linkBlocksSection.innerHTML = '';
+            blocks.forEach(block => linkBlocksSection.appendChild(createBlockElement(block)));
+        }
+
+        function createBlockElement(block) {
+            const section = document.createElement('section');
+            section.style.padding = '1rem';
+            section.style.borderRadius = '0.5rem';
+            section.style.backgroundColor = 'var(--card-bg-color)';
+            section.style.border = '1px solid var(--border-color)';
+            const header = document.createElement('div');
+            header.className = 'flex-between';
+            header.style.marginBottom = '1rem';
+            header.innerHTML = `<h2 class="widget-title">${block.title}</h2><div style="display: flex; align-items: center; gap: 0.5rem;"><button class="edit-block-btn btn btn-secondary btn-icon" style="font-size: 0.875rem;" data-lang-key-aria="editBlock">${svgs.pencil}</button><button class="delete-block-btn btn btn-danger btn-icon" style="font-size: 0.875rem;" data-lang-key-aria="deleteBlock">${svgs.trash}</button><button class="add-site-to-block-btn btn btn-primary btn-icon" style="font-size: 0.875rem;" data-lang-key-aria="addSiteToBlock">${svgs.plus}</button></div>`;
+            const grid = document.createElement('div');
+            grid.style.display = 'grid';
+            grid.style.gap = '1rem';
+            grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(120px, 1fr))';
+            block.links.forEach(link => grid.appendChild(createSiteCard(link.name, link.url, link.id, block.id)));
+            section.appendChild(header);
+            section.appendChild(grid);
+            header.querySelector('.edit-block-btn').addEventListener('click', (e) => handleEditBlock(block.id, block.title, e.currentTarget));
+            header.querySelector('.delete-block-btn').addEventListener('click', (e) => handleDeleteBlock(block.id, block.title, e.currentTarget));
+            header.querySelector('.add-site-to-block-btn').addEventListener('click', (e) => handleAddSiteToBlock(block.id, e.currentTarget));
+            return section;
+        }
+        
+        function createSiteCard(name, url, siteId, blockId) {
+            const card = document.createElement('a');
+            card.href = url;
+            card.target = '_blank';
+            card.rel = 'noopener noreferrer';
+            card.className = 'site-card';
+            card.style.position = 'relative';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.alignItems = 'center';
+            card.style.justifyContent = 'center';
+            card.style.padding = '1rem';
+            card.style.borderRadius = '0.5rem';
+            card.style.textAlign = 'center';
+            card.style.transition = 'all 0.2s';
+            // Otimização: Adicionado loading="lazy" para os favicons
+            card.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${url}&sz=64" alt="" loading="lazy" style="width: 2.5rem; height: 2.5rem; margin-bottom: 0.5rem; object-fit: contain;" onerror="this.onerror=null;this.src='https://placehold.co/64x64/e0e7ff/4f46e5?text=${name.charAt(0).toUpperCase()}';"><span>${name}</span><button class="delete-site-btn" style="position: absolute; top: 0.25rem; right: 0.25rem; background-color: #ef4444; color: white; width: 1.25rem; height: 1.25rem; border-radius: 50%; font-size: 0.75rem; opacity: 0; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;" aria-label="${T('deleteSiteConfirm', {name})}">${svgs.times}</button>`;
+            card.addEventListener('mouseenter', () => card.querySelector('.delete-site-btn').style.opacity = '1');
+            card.addEventListener('mouseleave', () => card.querySelector('.delete-site-btn').style.opacity = '0');
+            card.querySelector('.delete-site-btn').addEventListener('click', async (e) => {
+                e.preventDefault(); e.stopPropagation();
+                const confirmed = await confirmDeletion(e.currentTarget, T('deleteSiteConfirm', {name}));
+                if (confirmed) {
+                    let blocks = getData('linkBlocks', []);
+                    const block = blocks.find(b => b.id === blockId);
+                    if (block) {
+                        block.links = block.links.filter(l => l.id !== siteId);
+                        setData('linkBlocks', blocks);
+                        renderLinkBlocks();
+                    }
+                }
+            });
+            return card;
+        }
+
+        function renderTodos() {
+            const todoList = document.getElementById('todo-list');
+            const todos = getData('todos', []);
+            todoList.innerHTML = '';
+            todos.forEach(todo => {
+                const todoId = `todo-${todo.id}`;
+                const todoItem = document.createElement('div');
+                todoItem.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                todoItem.innerHTML = `<label for="${todoId}" style="display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0; cursor: pointer;"><input type="checkbox" id="${todoId}" ${todo.completed ? 'checked' : ''} class="form-checkbox" style="height: 1.25rem; width: 1.25rem; border-radius: 0.25rem; flex-shrink: 0; color: var(--accent-color);"><span class="flex-1 truncate">${todo.text}</span></label><button class="delete-todo-btn btn btn-danger btn-icon" style="padding: 0.5rem; font-size: 0.75rem; flex-shrink: 0;" data-lang-key-aria="deleteTodo" aria-label="${T('deleteTodoConfirm', {name: todo.text})}">${svgs.times}</button>`;
+                todoItem.querySelector('input[type="checkbox"]').addEventListener('change', () => toggleTodo(todo.id));
+                todoItem.querySelector('.delete-todo-btn').addEventListener('click', async (e) => {
+                    const confirmed = await confirmDeletion(e.currentTarget, T('deleteTodoConfirm', {name: todo.text}));
+                    if (confirmed) deleteTodo(todo.id);
+                });
+                todoList.appendChild(todoItem);
+            });
+        }
+        
+        function addTodo(text) {
+            let todos = getData('todos', []);
+            todos.push({ id: Date.now(), text, completed: false });
+            setData('todos', todos);
+            renderTodos();
+        }
+
+        function toggleTodo(id) {
+            let todos = getData('todos', []);
+            const todo = todos.find(t => t.id === id);
+            if (todo) { todo.completed = !todo.completed; setData('todos', todos); renderTodos(); }
+        }
+
+        function deleteTodo(id) {
+            let todos = getData('todos', []);
+            todos = todos.filter(t => t.id !== id);
+            setData('todos', todos);
+            renderTodos();
+        }
+
+        function handleSearch(e) {
+            e.preventDefault();
+            const query = document.getElementById('search-input').value;
+            if (query) {
+                const allSearchEngines = getData('searchEngines', []);
+                const currentEngineName = localStorage.getItem('searchEngine');
+                const searchEngine = allSearchEngines.find(e => e.name === currentEngineName) || allSearchEngines[0];
+                if (searchEngine) { window.open(searchEngine.url.replace('%s', encodeURIComponent(query)), '_blank'); }
+            }
+        }
+
+        function handleAddBlock() {
+            let blocks = getData('linkBlocks', []);
+            blocks.push({ id: Date.now(), title: `Bloco ${blocks.length + 1}`, links: [] });
+            setData('linkBlocks', blocks);
+            renderLinkBlocks();
+        }
+
+        function handleEditBlock(blockId, currentTitle, opener) {
+            const modal = document.getElementById('edit-block-modal');
+            document.getElementById('edit-block-id-input').value = blockId;
+            document.getElementById('block-title-input').value = currentTitle;
+            openModal(modal, opener);
+        }
+
+        function handleDeleteBlock(blockId, blockTitle, opener) {
+            confirmDeletion(opener, T('deleteBlockConfirm', {name: blockTitle})).then(confirmed => {
+                if (confirmed) {
+                    let blocks = getData('linkBlocks', []);
+                    setData('linkBlocks', blocks.filter(b => b.id !== blockId));
+                    renderLinkBlocks();
+                }
+            });
+        }
+
+        function handleAddSiteToBlock(blockId, opener) {
+            const modal = document.getElementById('add-site-modal');
+            document.getElementById('block-id-input').value = blockId;
+            openModal(modal, opener);
+        }
+        
+        function updateLayout() {
+            const showWidgets = getData('showProductivityWidgets', true);
+            const showPomodoro = getData('pomodoroEnabled', true);
+            document.getElementById('notes-section').classList.toggle('hidden', !showWidgets);
+            document.getElementById('todo-section').classList.toggle('hidden', !showWidgets);
+            document.getElementById('pomodoro-section').classList.toggle('hidden', !showPomodoro);
+        }
+
+        function updateMusicPlayerVisibility() {
+            const enabled = getData('musicPlayerEnabled', true);
+            const playerContainer = document.getElementById('music-player-container');
+            const header = document.querySelector('header.main-header');
+            playerContainer.classList.toggle('hidden', !enabled);
+            document.body.classList.toggle('player-visible', enabled);
+            document.body.classList.toggle('player-hidden', !enabled);
+            if (window.innerWidth > 640) { document.body.style.paddingTop = enabled ? '80px' : '0'; }
+            header.classList.toggle('no-player', !enabled);
+            document.getElementById('toggle-music-player').checked = enabled;
+        }
+
+        function applyBackgroundImage() {
+            const url = getData('backgroundImageUrl', '');
+            document.documentElement.style.setProperty('--bg-image', url ? `url('${url}')` : 'none');
+        }
+
+        function setupBackgroundImageControls() {
+            const urlInput = document.getElementById('background-image-url');
+            const clearBtn = document.getElementById('clear-background-btn');
+            urlInput.value = getData('backgroundImageUrl', '');
+            urlInput.addEventListener('change', (e) => {
+                setData('backgroundImageUrl', e.target.value);
+                applyBackgroundImage();
+            });
+            clearBtn.addEventListener('click', () => {
+                setData('backgroundImageUrl', '');
+                urlInput.value = '';
+                applyBackgroundImage();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded'); // Ativa a animação de fade-in
+
+            createColorInputs();
+            setupBackgroundImageControls();
+
+            const savedLang = localStorage.getItem('language') || 'pt';
+            document.getElementById('language-selector').value = savedLang;
+            setLanguage(savedLang);
+            document.getElementById('language-selector').addEventListener('change', (e) => setLanguage(e.target.value));
+
+            const themeToggle = document.getElementById('theme-toggle');
+            loadCustomColors();
+            setupColorPickers();
+            themeToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                updateThemeToggleButton();
+                loadCustomColors();
+            });
+            updateThemeToggleButton();
+            
+            const fontSelector = document.getElementById('font-selector');
+            const customFontInput = document.getElementById('custom-font-input');
+            const savedFont = localStorage.getItem('font');
+            if (savedFont) {
+                document.body.style.fontFamily = savedFont;
+                const isStandard = Array.from(fontSelector.options).some(opt => opt.value === savedFont);
+                if (isStandard) fontSelector.value = savedFont;
+                else customFontInput.value = savedFont.split(',')[0].replace(/'/g, '');
+            }
+            fontSelector.addEventListener('change', (e) => {
+                document.body.style.fontFamily = e.target.value;
+                localStorage.setItem('font', e.target.value);
+                customFontInput.value = '';
+            });
+            customFontInput.addEventListener('change', (e) => {
+                const fontName = e.target.value.trim();
+                if (fontName) {
+                    const newFont = `'${fontName}', sans-serif`;
+                    document.body.style.fontFamily = newFont;
+                    localStorage.setItem('font', newFont);
+                }
+            });
+
+            const toggleSettings = (show) => {
+                const isExpanded = settingsPanel.getAttribute('aria-expanded') === 'true';
+                if (show === undefined) show = !isExpanded;
+                settingsPanel.setAttribute('aria-expanded', show);
+                contentWrapper.setAttribute('aria-hidden', show);
+                settingsToggle.setAttribute('aria-expanded', show);
+                if (show) {
+                    lastFocusedElement = document.activeElement;
+                    closeSettings.focus();
+                    trapFocus(settingsPanel);
+                } else {
+                    if(lastFocusedElement) lastFocusedElement.focus();
+                }
+            };
+            settingsToggle.addEventListener('click', () => toggleSettings());
+            closeSettings.addEventListener('click', () => toggleSettings(false));
+            
+            document.getElementById('search-form').addEventListener('submit', handleSearch);
+            initializeSearchEngines();
+            renderSearchEngines();
+
+            document.getElementById('restore-engines-btn').addEventListener('click', (e) => {
+                confirmDeletion(e.currentTarget, T('restoreEnginesConfirm')).then(confirmed => {
+                    if(confirmed) {
+                        setData('searchEngines', defaultSearchEnginesData);
+                        renderSearchEngines();
+                        renderEngineManagementList();
+                    }
+                });
+            });
+
+            renderEngineManagementList();
+            document.getElementById('add-engine-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nameInput = document.getElementById('engine-name');
+                const urlInput = document.getElementById('engine-url');
+                const errorDiv = document.getElementById('engine-url-error');
+                if (!urlInput.value.includes('%s')) {
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+                errorDiv.classList.add('hidden');
+                const engines = getData('searchEngines', []);
+                engines.push({ name: nameInput.value.trim(), url: urlInput.value.trim() });
+                setData('searchEngines', engines);
+                renderEngineManagementList();
+                renderSearchEngines();
+                e.target.reset();
+            });
+
+            document.getElementById('add-block-btn').addEventListener('click', handleAddBlock);
+            renderLinkBlocks();
+            
+            const downloadToggle = document.getElementById('download-notes-toggle');
+            const downloadOptions = document.getElementById('download-options');
+            const notesTextarea = document.getElementById('notes-textarea');
+            notesTextarea.value = getData('quickNotes', '') || '';
+            notesTextarea.addEventListener('input', () => setData('quickNotes', notesTextarea.value));
+            function downloadFile(content, fileName, mimeType) {
+                const blob = new Blob([content], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url; a.download = fileName;
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            }
+            downloadToggle.addEventListener('click', (e) => { e.stopPropagation(); downloadOptions.classList.toggle('hidden'); });
+            document.getElementById('download-md').addEventListener('click', (e) => { e.preventDefault(); downloadFile(notesTextarea.value, 'notas.md', 'text/markdown;charset=utf-8'); downloadOptions.classList.add('hidden'); });
+            document.getElementById('download-txt').addEventListener('click', (e) => { e.preventDefault(); downloadFile(notesTextarea.value, 'notas.txt', 'text/plain;charset=utf-8'); downloadOptions.classList.add('hidden'); });
+
+            document.getElementById('add-todo-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('todo-input');
+                if (input.value.trim()) { addTodo(input.value.trim()); input.value = ''; }
+            });
+            renderTodos();
+
+            const allModals = document.querySelectorAll('.modal-overlay');
+            allModals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        if (modal.id === 'confirm-delete-modal' && deleteResolver) deleteResolver(false);
+                        closeModal(modal);
+                    }
+                });
+                const cancelButton = modal.querySelector('[data-lang-key="cancel"]');
+                if (cancelButton) {
+                    cancelButton.addEventListener('click', () => {
+                        if (modal.id === 'confirm-delete-modal' && deleteResolver) deleteResolver(false);
+                        closeModal(modal);
+                    });
+                }
+            });
+            document.getElementById('add-site-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const blockId = parseInt(document.getElementById('block-id-input').value, 10);
+                const name = document.getElementById('site-name').value;
+                const url = document.getElementById('site-url').value;
+                let blocks = getData('linkBlocks', []);
+                const block = blocks.find(b => b.id === blockId);
+                if (block) {
+                    block.links.push({ id: Date.now(), name, url });
+                    setData('linkBlocks', blocks);
+                    renderLinkBlocks();
+                    closeModal(document.getElementById('add-site-modal'));
+                    e.target.reset();
+                }
+            });
+            document.getElementById('edit-block-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const blockId = parseInt(document.getElementById('edit-block-id-input').value, 10);
+                const newTitle = document.getElementById('block-title-input').value;
+                let blocks = getData('linkBlocks', []);
+                const block = blocks.find(b => b.id === blockId);
+                if (block) {
+                    block.title = newTitle;
+                    setData('linkBlocks', blocks);
+                    renderLinkBlocks();
+                    closeModal(document.getElementById('edit-block-modal'));
+                }
+            });
+            document.getElementById('confirm-delete').addEventListener('click', () => { if (deleteResolver) deleteResolver(true); closeModal(confirmDeleteModal); });
+            document.getElementById('reset-colors-btn').addEventListener('click', () => {
+                const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                const customColors = getData('customColors', { light: {}, dark: {} });
+                customColors[mode] = {};
+                setData('customColors', customColors);
+                loadCustomColors();
+            });
+            
+            document.getElementById('toggle-music-player').checked = getData('musicPlayerEnabled', true);
+            document.getElementById('toggle-widgets').checked = getData('showProductivityWidgets', true);
+            document.getElementById('toggle-pomodoro').checked = getData('pomodoroEnabled', true);
+            
+            document.getElementById('toggle-music-player').addEventListener('change', (e) => { setData('musicPlayerEnabled', e.target.checked); updateMusicPlayerVisibility(); });
+            document.getElementById('toggle-widgets').addEventListener('change', (e) => { setData('showProductivityWidgets', e.target.checked); updateLayout(); });
+            document.getElementById('toggle-pomodoro').addEventListener('change', (e) => { setData('pomodoroEnabled', e.target.checked); updateLayout(); });
+
+
+            document.addEventListener('click', (e) => {
+                if (!downloadToggle.contains(e.target) && !downloadOptions.contains(e.target)) downloadOptions.classList.add('hidden');
+                const playlistPanel = document.getElementById('playlist-panel');
+                const togglePlaylistBtn = document.getElementById('toggle-playlist-btn');
+                if (!playlistPanel.contains(e.target) && !togglePlaylistBtn.contains(e.target)) playlistPanel.classList.remove('visible');
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") {
+                    allModals.forEach(modal => { if (!modal.classList.contains('hidden')) { if (modal.id === 'confirm-delete-modal' && deleteResolver) deleteResolver(false); closeModal(modal); }});
+                    if (settingsPanel.getAttribute('aria-expanded') === 'true') toggleSettings(false);
+                    if (!downloadOptions.classList.contains('hidden')) downloadOptions.classList.add('hidden');
+                    if (musicPlayer.playlistPanel.classList.contains('visible')) musicPlayer.playlistPanel.classList.remove('visible');
+                }
+            });
+
+            pomodoro.init();
+            musicPlayer.init();
+            updateMusicPlayerVisibility();
+            updateLayout();
+        });
+    </script>
+</body>
+</html>
