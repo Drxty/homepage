@@ -1,3 +1,7 @@
+This guide is written in English.
+
+Há uma versão deste guia em **português**: https://github.com/Drxty/homepage/blob/e4b68e539d4f64f640d2ad12e37b26ddc8b401ec/readme-pt.md
+
 # Complete Customization Guide for the Home Page
 
 This guide is a step-by-step tutorial to help you understand and customize **index.html**, covering styles, colors, features, adding songs, and much more.
@@ -273,34 +277,6 @@ Add or modify as needed.
 2. Use DevTools (F12) to inspect and test live styles.
 3. Check the console for JavaScript errors.
 4. Run `localStorage.clear()` in the console to reset all settings.
-
----
-
-## Publishing on GitHub Pages
-
-Make English the default and host a Portuguese version in `/pt/`:
-
-1. **Repository structure**:
-   ```
-   / (repo root)
-   ├─ index.html        ← English (default)
-   ├─ pt/
-   │    └─ index.html  ← Portuguese
-   └─ assets/
-        └─ ...
-   ```
-2. **Language switch links** (in header of each page):
-   ```html
-   <a href="/">EN</a> | <a href="/pt/">PT</a>
-   ```
-3. **Enable GitHub Pages**: in repo settings, point to `main` branch, root.
-4. **Optional redirect** by browser language:
-   ```html
-   <script>
-     const lang = navigator.language.startsWith('pt') ? '/pt/' : '/';
-     if (location.pathname === '/') location.replace(lang);
-   </script>
-   ```
 
 ---
 
