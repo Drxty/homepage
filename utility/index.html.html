@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="pageTitle">Lista de Utilitários</title>
+   <style>
+        /*
+        =====================================================================
+        GUIA DE PERSONALIZAÇÃO VISUAL
+        =====================================================================
+        
+        Olá! Este guia rápido irá ajudá-lo a personalizar a aparência do seu site.
+        
+        1. CORES:
+           - As cores principais estão definidas na seção `:root`.
+           - Variáveis como `--bg-color`, `--text-color`, `--accent-color` controlam as cores do tema claro.
+           - Na seção `.dark`, você pode alterar as mesmas variáveis para o tema escuro.
+           - Para alterar uma cor, basta substituir o código hexadecimal (ex: #f2f0e3) pelo desejado.
+
+        2. FONTES:
+           - As fontes são carregadas na seção `@font-face`. Você pode substituir as URLs por outras fontes da web.
+           - As famílias de fontes usadas são definidas no seletor `body` e `body.serif-font`.
+           - Você pode alterar 'Luciole' ou 'RobotoSerif' para os nomes das fontes que você carregou.
+
+        3. TAMANHOS E ESPAÇAMENTOS:
+           - O tamanho base da fonte é controlado pela propriedade `font-size` na tag `html`.
+           - A variável `--content-scale` (controlada pelos botões +/- nas configurações) multiplica o tamanho do conteúdo.
+           - A largura máxima do container de conteúdo é definida em `.container`.
+           - As larguras dos painéis laterais são controladas por `--side-nav-width`.
+
+        4. IMAGEM DE FUNDO (BACKGROUND):
+           - A imagem de fundo é controlada diretamente na tag `body`.
+           - Para ALTERAR a imagem, substitua a URL em `background-image: url('URL_AQUI');` no seletor `body`.
+           - Para REMOVER a imagem, apague as linhas `background-image`, `background-size`, `background-position` e `background-attachment`.
+           - `background-attachment: fixed;` faz com que a imagem não role com a página. Você pode remover isso se preferir.
+           - O conteúdo principal e os painéis já têm um fundo sólido (`--bg-color`) para garantir a legibilidade.
+
+        =====================================================================
+        */
+
+        /* --- Definições de Fontes --- */
+        @font-face {font-family: 'Luciole';src: url('https://drxty.github.io/fonts/Luciole-Regular.woff2') format('woff2');font-weight: normal;font-style: normal;}
+        @font-face {font-family: 'Luciole';src: url('https://drxty.github.io/fonts/Luciole-Bold.woff2') format('woff2');font-weight: bold;font-style: normal;}
+        @font-face {font-family: 'Luciole';src: url('https://drxty.github.io/fonts/Luciole-Italic.woff2') format('woff2');font-weight: normal; font-style: italic;}
+        @font-face {font-family: 'Luciole';src: url('https://drxty.github.io/fonts/Luciole-BoldItalic.woff2') format('woff2');font-weight: bold; font-style: italic;}
+        @font-face {font-family: 'RobotoSerif';src: url('https://drxty.github.io/fonts/RobotoSerif-legible-regular.woff2') format('woff2');font-weight: normal;font-style: normal;}
+        @font-face {font-family: 'RobotoSerif';src: url('https://drxty.github.io/fonts/RobotoSerif-legible-bold.woff2') format('woff2');font-weight: bold;font-style: normal;}
+        @font-face {font-family: 'RobotoSerif';src: url('https://drxty.github.io/fonts/RobotoSerif-Italic-legible-regular.woff2') format('woff2');font-weight: normal; font-style: italic;}
+        @font-face {font-family: 'RobotoSerif';src: url('https://drxty.github.io/fonts/RobotoSerif-Italic-legible-bold.woff2') format('woff2');font-weight: bold; font-style: italic;}
+
+        /* --- Variáveis de Tema (Cores, Fontes, Tamanhos) --- */
+        :root {
+            --bg-color: #f2f0e3;
+            --text-color: #2e2e2e;
+            --text-color-muted: #545451;
+            --accent-color: #097b36;
+            --border-color: #cccccc;
+            --selection-bg-color: rgb(127, 104, 146);
+            --overlay-bg-color: rgba(0, 0, 0, 0.4);
+            --side-nav-width: 280px;
+            --serif-multiplier: 1;
+            /* NOVO: Variável para o espaçamento das "ilhas" */
+            --island-gap: 1rem;
+        }
+
+        .dark {
+            --bg-color: #005f5f;
+            --text-color: rgb(255, 247, 217);
+            --text-color-muted: rgb(223, 215, 187);
+            --accent-color: rgb(239, 210, 252);
+            --border-color: rgba(255, 247, 217, 0.4);
+            --selection-bg-color: rgb(198, 213, 207);
+            --overlay-bg-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        /* --- Estilos Globais e Reset --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 18px; 
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-image: url('https://images.unsplash.com/photo-1488998427799-e3362cec87c3?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-color);
+            font-family: 'Luciole', sans-serif; 
+            display: flex;
+            min-height: 100vh;
+            font-feature-settings: "zero", "liga";
+            text-rendering: optimizeLegibility;
+        }
+        
+        body.serif-font {
+            font-family: 'RobotoSerif', serif;
+            word-spacing: 0.17px;
+            letter-spacing: 0.70px;
+        }
+        
+        ::selection {
+            background-color: var(--selection-bg-color);
+            color: var(--bg-color);
+        }
+
+        /* --- Layout Principal --- */
+        #main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            transition: margin 0.3s ease-in-out;
+            --content-scale: 1.1;
+        }
+
+        /* ESTILO ILHA: Aplicado ao container principal */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: var(--island-gap) auto; /* Margem para flutuar */
+            padding: 2rem;
+            flex-grow: 1;
+            background-color: var(--bg-color);
+            border-radius: 1rem; /* Cantos arredondados */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1); /* Sombra para profundidade */
+            transition: all 0.3s ease-in-out; /* Adicionado para suavizar a transição */
+        }
+
+        /* --- Barra Superior --- */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 0.5rem 0;
+        }
+        
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header {
+            text-align: left;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: calc(2.5rem * var(--content-scale) * var(--serif-multiplier));
+            font-weight: normal;
+        }
+        
+        .header p {
+            font-size: calc(1.1rem * var(--content-scale) * var(--serif-multiplier));
+        }
+        
+        /* --- Botões e Controles --- */
+        .btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            font: inherit;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: normal;
+            transition: background-color .2s ease, transform .2s ease, border-color .2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            height: 50px;
+        }
+
+        .btn-icon {
+            padding: 0;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .btn:hover {
+            background-color: rgba(0,0,0,0.07);
+            border-color: var(--accent-color);
+        }
+        
+        .dark .btn:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-color);
+        }
+        
+        .select-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        #language-selector {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.5rem 2.7rem 0.5rem 1.2rem;
+            font: inherit;
+            color: var(--text-color);
+            cursor: pointer;
+            height: 50px;
+            transition: border-color 0.2s;
+        }
+
+        .select-wrapper:hover #language-selector {
+            border-color: var(--accent-color);
+        }
+
+        .select-arrow {
+            position: absolute;
+            pointer-events: none;
+            color: var(--text-color);
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0.85rem;
+        }
+        
+        .select-arrow svg {
+             width: 24px;
+            height: 24px;
+            fill: var(--text-color);
+        }
+
+        #language-selector option {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- Seções de Conteúdo e Listas --- */
+        .links-section {
+            margin-bottom: 2.5rem;
+        }
+        .links-section h2 {
+            font-size: calc(1.5rem * var(--content-scale) * var(--serif-multiplier));
+            font-weight: normal;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .links-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+        
+        .links-list li a {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: var(--text-color);
+            border-radius: 0.5rem;
+            border: 1px solid transparent; 
+            transition: border-color 0.2s, background-color 0.2s;
+            font-size: calc(1rem * var(--content-scale) * var(--serif-multiplier));
+        }
+
+        .links-list li a:hover {
+            background-color: rgba(0,0,0,0.07);
+            border-color: var(--text-color);
+        }
+        
+        .dark .links-list li a:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .link-title {
+            font-weight: normal;
+        }
+
+        .link-description {
+            font-size: 0.875em;
+            color: var(--text-color-muted);
+            line-height: 1.4;
+        }
+        
+        /* ESTILO ILHA: Aplicado aos painéis laterais */
+        #side-nav, #settings-panel, #toc-nav {
+            position: fixed;
+            top: var(--island-gap);
+            height: calc(100% - (var(--island-gap) * 2)); /* Altura ajustada para margens */
+            background-color: var(--bg-color);
+            z-index: 1001;
+            transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, height 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+            border-radius: 1rem; /* Cantos arredondados */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1); /* Sombra */
+        }
+
+        #side-nav {
+            left: var(--island-gap);
+            width: var(--side-nav-width);
+            padding: 1rem;
+            overflow-y: auto;
+            border: 1px solid var(--border-color); /* Adicionado borda para consistência */
+        }
+
+        #settings-panel {
+            right: var(--island-gap);
+            width: 340px;
+            padding: 1.5rem;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transform: translateX(calc(100% + var(--island-gap) * 2)); /* Ajuste para esconder */
+            border: 1px solid var(--border-color);
+        }
+
+        #toc-nav {
+            right: var(--island-gap);
+            width: var(--side-nav-width);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        #side-nav-list {
+            list-style: none;
+        }
+        
+        #side-nav-list a {
+            display: block;
+            padding: .8rem .75rem;
+            border-radius: .5rem;
+            cursor: pointer;
+            transition: background-color .2s;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        #side-nav-list a:hover {
+            background-color: rgba(0,0,0,0.07);
+        }
+        
+        .dark #side-nav-list a:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        #settings-panel.is-open {
+            transform: translateX(0);
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+        
+        .settings-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .settings-section label {
+            font-size: 1rem;
+            color: var(--text-color-muted);
+        }
+        
+        .font-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .font-size-controls .btn {
+            flex-grow: 1;
+        }
+
+        #font-toggle-btn {
+            width: 100%;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--overlay-bg-color);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .overlay.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #toc-nav h2 {
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        #toc-list a {
+            display: block;
+            padding: .5rem .75rem;
+            border-radius: .5rem;
+            text-decoration: none;
+            color: var(--text-color-muted);
+            font-size: 0.9rem;
+            transition: background-color .2s, color .2s;
+        }
+        #toc-list a:hover {
+            background-color: rgba(0,0,0,0.07);
+            color: var(--text-color);
+        }
+        .dark #toc-list a:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+        
+        /* --- Rodapé --- */
+        .main-footer {
+            text-align: left;
+            padding: 2rem 1rem 1rem;
+            font-size: 0.875rem;
+            color: var(--text-color-muted);
+            line-height: 1.5;
+        }
+
+        .main-footer a {
+            color: inherit;
+            text-decoration: underline;
+        }
+        .main-footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- Lógica de Exibição Responsiva --- */
+        
+        /* ESTILO ILHA: Ajustes para esconder/mostrar os painéis */
+        #home-toggle-mobile, #toc-toggle-mobile { display: inline-flex; }
+        #side-nav { transform: translateX(calc(-100% - var(--island-gap))); }
+        #toc-nav { transform: translateX(calc(100% + var(--island-gap))); }
+        #side-nav.is-open, #toc-nav.is-open { transform: translateX(0); }
+        
+        .overlay.for-side-nav.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ===== INÍCIO DA ALTERAÇÃO - LÓGICA PARA MOBILE ===== */
+        /* Mobile (até 1023px) */
+        @media (max-width: 1023px) {
+            /* Remove o estilo "ilha" para o container principal */
+            .container {
+                border-radius: 0;
+                margin: 0;
+                box-shadow: none;
+                min-height: 100vh; /* Garante que o container ocupe toda a altura */
+                padding: 1.5rem; /* Ajuste no padding para telas menores */
+            }
+
+            /* Remove o espaçamento da "ilha" no corpo da página */
+            body {
+                --island-gap: 0rem;
+            }
+
+            /* Ajusta os painéis laterais para a nova realidade sem gap */
+            #side-nav, #settings-panel, #toc-nav {
+                top: 0;
+                height: 100%;
+                border-radius: 0;
+                border: none; /* Remove a borda no mobile */
+            }
+            
+            #settings-panel {
+                border-left: 1px solid var(--border-color);
+            }
+        }
+        /* ===== FIM DA ALTERAÇÃO ===== */
+
+
+        /* Desktop (1024px e maior) */
+        @media (min-width: 1024px) {
+            /* ESTILO ILHA: Ajuste na margem do container principal */
+            #main-container { margin-left: calc(var(--side-nav-width) + (var(--island-gap) * 2)); }
+            #side-nav { transform: translateX(0); }
+            
+            .links-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* ESTILO ILHA: Ajuste para esconder o painel */
+            #side-nav.is-hidden-desktop { transform: translateX(calc(-100% - var(--island-gap))); }
+            #main-container.side-nav-hidden { margin-left: 0; }
+        }
+
+        /* Desktop Largo (1280px e maior) */
+        @media (min-width: 1280px) {
+            /* ESTILO ILHA: Ajuste na margem do container principal */
+            #main-container { margin-right: calc(var(--side-nav-width) + (var(--island-gap) * 2)); }
+            #toc-nav { transform: translateX(0); }
+
+            /* ESTILO ILHA: Ajuste para esconder o painel */
+            #toc-nav.is-hidden-desktop { transform: translateX(calc(100% + var(--island-gap))); }
+            #main-container.toc-nav-hidden { margin-right: 0; }
+            
+            #main-container.side-nav-hidden.toc-nav-hidden { margin-left: 0; margin-right: 0; }
+            #main-container.toc-nav-hidden { margin-right: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Painel de Navegação Esquerdo (Home) -->
+    <nav id="side-nav">
+        <ul id="side-nav-list">
+             <li class="home-panel-item">
+                <a href="index.html">
+                    <span data-lang-key="homePage">Página Inicial</span>
+                </a>
+            </li>
+            <li class="home-panel-item">
+                <a href="https://github.com/drxty" target="_blank" rel="noopener noreferrer">
+                    <span data-lang-key="myGithub">Meu GitHub</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Conteúdo Principal -->
+    <div id="main-container">
+        <div class="container">
+            <!-- Barra Superior com Controles -->
+            <div class="top-bar">
+                 <div class="top-bar-left">
+                     <button id="home-toggle-mobile" class="btn btn-icon" aria-label="Abrir/Fechar Navegação">
+                        <!-- Ícone SVG para Menu -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                    </button>
+                </div>
+
+                <div class="top-bar-right">
+                    <div class="select-wrapper">
+                        <select id="language-selector" aria-label="Selecionar Idioma">
+                            <option value="pt">PT</option>
+                            <option value="en">EN</option>
+                        </select>
+                        <div class="select-arrow" aria-hidden="true">
+                           <!-- Ícone SVG para Seta -->
+                           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg>
+                        </div>
+                    </div>
+                    <button id="theme-toggle" class="btn btn-icon" aria-label="Alternar Tema"></button>
+                    <button id="settings-toggle" class="btn btn-icon" aria-label="Configurações">
+                        <!-- Ícone SVG para Configurações -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                    </button>
+                    <button id="toc-toggle-mobile" class="btn btn-icon" aria-label="Abrir/Fechar Sumário">
+                        <!-- Ícone SVG para Lista -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <header class="header">
+                <h1 data-lang-key="pageTitle">Lista de Utilitários</h1>
+                <p style="color: var(--text-color-muted);" data-lang-key="pageSubtitle">
+                    Uma lista de links diretos para softwares, ferramentas e outros recursos úteis.
+                </p>
+            </header>
+
+            <main id="main-content"></main>
+
+            <footer class="main-footer">
+                <p id="credits-text"></p>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Painel de Configurações -->
+    <div id="settings-panel">
+        <div class="panel-header">
+            <h2 data-lang-key="settingsTitle">Configurações</h2>
+            <button id="close-settings-panel" class="btn btn-icon" aria-label="Fechar configurações">
+                <!-- Ícone SVG para Fechar -->
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+        <div class="settings-section">
+            <label data-lang-key="fontFamilyLabel">Fonte</label>
+            <button id="font-toggle-btn" class="btn"></button>
+        </div>
+        <div class="settings-section">
+            <label data-lang-key="fontSizeLabel">Tamanho da Fonte (Corpo do Texto)</label>
+            <div class="font-size-controls">
+                <button id="decrease-font-btn" class="btn btn-icon" aria-label="Diminuir fonte">
+                    <!-- Ícone SVG para Remover -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13H5v-2h14v2z"/></svg>
+                </button>
+                <button id="increase-font-btn" class="btn btn-icon" aria-label="Aumentar fonte">
+                   <!-- Ícone SVG para Adicionar -->
+                   <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel de Navegação Direito (Sumário) -->
+    <nav id="toc-nav">
+        <h2 data-lang-key="tocTitle">Sumário</h2>
+        <ul id="toc-list"></ul>
+    </nav>
+
+    <!-- Overlay para menus mobile -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Lógica Principal (JavaScript) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DADOS E TRADUÇÕES ---
+            const translations = {
+                en: {
+                    pageTitle: "Utility List", pageSubtitle: "A list of direct links to useful software, tools, and other resources.",
+                    creditsText: 'Developed by <a href="https://github.com/drxty" target="_blank" rel="noopener noreferrer">Drxty</a>. Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.',
+                    themeToggleLight: "Switch to Light Mode", themeToggleDark: "Switch to Dark Mode",
+                    settingsTitle: "Settings", languageLabel: "Language", fontFamilyLabel: "Font", fontSizeLabel: "Font Size (Body Text)", tocTitle: "Contents",
+                    homePage: "Home Page", myGithub: "My GitHub", fontSansSerif: "Sans-serif", fontSerif: "Serif",
+                    generalSearch: "General Search", academicSearch: "Academic Search", productivitySoftware: "Productivity Software", mediaAudio: "Media & Audio", browserExtensions: "Browser Extensions", librariesArchives: "Libraries & Archives", fileSharing: "File Sharing & P2P", dataResources: "Data/Information Resources",
+                    google: "Google", desc_google: "The most used search engine in the world.",
+                    bing: "Bing", desc_bing: "Microsoft's search engine.",
+                    duckduckgo: "DuckDuckGo", desc_duckduckgo: "A search engine that emphasizes protecting searchers' privacy.",
+                    yandex: "Yandex", desc_yandex: "Search engine for obscure files and websites.",
+                    marginalia: "Marginalia", desc_marginalia: "A search engine for the small, weird and independent web.",
+                    wiby: "Wiby", desc_wiby: "A search engine for classic websites.",
+                    googleScholar: "Google Scholar", desc_googleScholar: "A freely accessible web search engine that indexes the full text or metadata of scholarly literature.",
+                    philpapers: "PhilPapers", desc_philpapers: "A comprehensive index and bibliography of philosophy maintained by the community of philosophers.",
+                    semanticScholar: "Semantic Scholar", desc_semanticScholar: "An AI-powered research tool for scientific literature.",
+                    arxiv: "arXiv", desc_arxiv: "An open-access archive for scholarly articles in the fields of physics, mathematics, computer science, and more.",
+                    jstor: "JSTOR", desc_jstor: "A digital library of academic journals, books, and primary sources.",
+                    connectedPapers: "Connected Papers", desc_connectedPapers: "A visual tool to help researchers find and explore academic papers.",
+                    core: "CORE", desc_core: "Aggregates open access research outputs from repositories and journals worldwide.",
+                    doaj: "Directory of Open Access Journals", desc_doaj: "A community-curated online directory that indexes and provides access to high quality, open access, peer-reviewed journals.",
+                    internetArchiveScholar: "Internet Archive Scholar", desc_internetArchiveScholar: "A search engine for scholarly materials preserved in the Internet Archive.",
+                    citeseer: "CiteSeerX", desc_citeseer: "A scientific literature digital library and search engine that focuses primarily on the literature in computer and information science.",
+                    crossref: "CrossRef", desc_crossref: "Makes research outputs easy to find, cite, link, assess, and reuse.",
+                    researchgate: "ResearchGate", desc_researchgate: "A social networking site for scientists and researchers to share papers, ask and answer questions, and find collaborators.",
+                    khanAcademy: "Khan Academy", desc_khanAcademy: "A non-profit educational organization created to provide a free, world-class education for anyone, anywhere.",
+                    wolframAlpha: "WolframAlpha", desc_wolframAlpha: "A computational knowledge engine or answer engine.",
+                    libreoffice: "LibreOffice", desc_libreoffice: "A free and open-source office productivity software suite.",
+                    audacity: "Audacity", desc_audacity: "A free and open-source digital audio editor and recording application software.",
+                    zotero: "Zotero", desc_zotero: "A free, open-source personal research assistant that helps you collect, organize, cite, and share your research.",
+                    peazip: "PeaZip", desc_peazip: "A free and open-source file manager and archiver.",
+                    sevenzip: "7-Zip", desc_sevenzip: "A free and open-source file archiver with a high compression ratio.",
+                    obsidian: "Obsidian", desc_obsidian: "A powerful knowledge base on top of a local folder of plain text Markdown files.",
+                    drawio: "Draw.io", desc_drawio: "A free online diagram software for making flowcharts, process diagrams, etc.",
+                    lightshot: "Lightshot", desc_lightshot: "A simple and convenient screenshot tool.",
+                    mpv: "MPV", desc_mpv: "A free and open-source media player.",
+                    obs: "OBS Studio", desc_obs: "A free and open-source software for video recording and live streaming.",
+                    equalizerapo: "Equalizer APO", desc_equalizerapo: "A system-wide equalizer for Windows.",
+                    peacegui: "Peace GUI", desc_peacegui: "An equalizer and audio mixer for all your PC software on any Windows version.",
+                    hesuvi: "HeSuVi", desc_hesuvi: "Turns your headphones into a 7.1 virtual surround sound system.",
+                    unpaywall: "Unpaywall", desc_unpaywall: "A browser extension that finds legal, free-to-read versions of paywalled research papers.",
+                    chrono: "Chrono Download Manager", desc_chrono: "A download manager extension for your browser.",
+                    sponsorblock: "SponsorBlock", desc_sponsorblock: "An open-source browser extension to skip sponsor segments in YouTube videos.",
+                    ublock: "uBlock Origin", desc_ublock: "A wide-spectrum content blocker for browsers.",
+                    socialfocus: "SocialFocus", desc_socialfocus: "A browser extension to hide distracting feeds on social media.",
+                    readerview: "Reader View", desc_readerview: "A browser extension that removes clutter from web pages.",
+                    googlescholarpdf: "Google Scholar PDF Reader", desc_googlescholarpdf: "Adds a button to Google Scholar results to open PDFs directly.",
+                    greasyfork: "Greasy Fork", desc_greasyfork: "A repository for user scripts.",
+                    librarygenesis: "Library Genesis", desc_librarygenesis: "A file-sharing based free library for scholarly journal articles, academic and general-interest books.",
+                    annasarchive: "Anna's Archive", desc_annasarchive: "A free library.",
+                    scihub: "Sci-Hub", desc_scihub: "A free library website that provides free access to millions of research papers and books.",
+                    freemediaheckyeah: "FreeMediaHeckYeah", desc_freemediaheckyeah: "A curated list of free media resources.",
+                    slum: "SLUM - Free Library Monitor", desc_slum: "A tool to monitor the availability and server status of free libraries.",
+                    sciencehubmutualaid: "Science Hub Mutual AID", desc_sciencehubmutualaid: "A mutual aid platform for accessing scientific literature.",
+                    wikipedia: "Wikipedia", desc_wikipedia: "A free, multilingual, open-collaborative online encyclopedia.",
+                    blip: "Blip", desc_blip: "A peer-to-peer file sharing application.",
+                    transmission: "Transmission", desc_transmission: "A fast, easy, and free BitTorrent client.",
+                    qbittorrent: "qBittorrent", desc_qbittorrent: "A free and open-source cross-platform BitTorrent client.",
+                    privatetrackerlist: "Private Tracker List", desc_privatetrackerlist: "A community-maintained list of private BitTorrent trackers.",
+                    luciolefont: "Luciole Font", desc_luciolefont: "A font for dyslexic people, people with low vision and normal vision, improving legibility and reading ability for all through scientifically tested metrics.",
+                    oecd: "OECD Data", desc_oecd: "A rich source of comparable statistical, economic and social data from OECD countries.",
+                    googleDatasetSearch: "Google Dataset Search", desc_googleDatasetSearch: "A search engine from Google for finding datasets stored across the web.",
+                    kaggleDatasets: "Kaggle Datasets", desc_kaggleDatasets: "Platform with a vast collection of datasets for analysis and machine learning.",
+                    huggingFaceDatasets: "Hugging Face Datasets", desc_huggingFaceDatasets: "An open-source library with thousands of datasets for NLP, computer vision, and audio tasks.",
+                    zenodo: "Zenodo", desc_zenodo: "A general-purpose open-access research repository developed under the European OpenAIRE program.",
+                    academicTorrents: "Academic Torrents", desc_academicTorrents: "A platform for sharing large datasets for research, using the BitTorrent protocol.",
+                    googleCloud: "Google Cloud Datasets", desc_googleCloud: "Public datasets hosted in Google Cloud, ready for analysis.",
+                    eurostat: "Eurostat", desc_eurostat: "The statistical office of the European Union, providing high-quality statistics for Europe.",
+                    googleNgrams: "Google Ngrams Viewer", desc_googleNgrams: "Visualize the frequency of words or phrases in a corpus of books over time.",
+                    dspaceMit: "DSpace@MIT", desc_dspaceMit: "A digital repository capturing, preserving, and sharing MIT's intellectual output.",
+                    mendeleyData: "Mendeley Data", desc_mendeleyData: "A secure cloud-based repository where you can store and share your research data.",
+                    papersWithCode: "Papers with Code Datasets", desc_papersWithCode: "An open-source community for machine learning papers, code, datasets, and leaderboards.",
+                    openScienceFramework: "Open Science Framework", desc_openScienceFramework: "An open-source project management platform that supports researchers throughout the entire project lifecycle.",
+                    re3data: "re3data", desc_re3data: "A global registry of research data repositories from all academic disciplines.",
+                    statista: "Statista", desc_statista: "A German online portal for statistics, which makes data from market and opinion research institutes available.",
+                    tensorFlowHub: "TensorFlow Hub", desc_tensorFlowHub: "A library for the publication, discovery, and consumption of reusable parts of machine learning models.",
+                    ukDataService: "UK Data Service", desc_ukDataService: "The UK's largest collection of social, economic and population research data."
+                },
+                pt: {
+                    pageTitle: "Lista de Utilitários", pageSubtitle: "Uma lista de links diretos para softwares, ferramentas e outros recursos úteis.",
+                    creditsText: 'Desenvolvido por <a href="https://github.com/drxty" target="_blank" rel="noopener noreferrer">Drxty</a>. Licenciado sob <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.',
+                    themeToggleLight: "Mudar para Modo Claro", themeToggleDark: "Mudar para Modo Escuro",
+                    settingsTitle: "Configurações", languageLabel: "Idioma", fontFamilyLabel: "Fonte", fontSizeLabel: "Tamanho da Fonte (Corpo do Texto)", tocTitle: "Sumário",
+                    homePage: "Página Inicial", myGithub: "Meu GitHub", fontSansSerif: "Sans-serif", fontSerif: "Serif",
+                    generalSearch: "Buscadores Gerais", academicSearch: "Busca Acadêmica", productivitySoftware: "Software e Produtividade", mediaAudio: "Mídia e Áudio", browserExtensions: "Extensões de Navegador", librariesArchives: "Bibliotecas e Arquivos", fileSharing: "Compartilhamento de Arquivos e P2P", dataResources: "Recursos de Dados/Informação",
+                    google: "Google", desc_google: "O motor de busca mais usado no mundo.",
+                    bing: "Bing", desc_bing: "Motor de busca da Microsoft.",
+                    duckduckgo: "DuckDuckGo", desc_duckduckgo: "Um motor de busca que enfatiza a proteção da privacidade dos usuários.",
+                    yandex: "Yandex", desc_yandex: "Motor de busca para arquivos e sites obscuros.",
+                    marginalia: "Marginalia", desc_marginalia: "Um motor de busca para a web pequena, estranha e independente.",
+                    wiby: "Wiby", desc_wiby: "Um motor de busca para sites clássicos.",
+                    googleScholar: "Google Acadêmico", desc_googleScholar: "Um motor de busca da web de acesso livre que indexa o texto completo ou metadados de literatura acadêmica.",
+                    philpapers: "PhilPapers", desc_philpapers: "Um índice e bibliografia abrangente de filosofia mantido pela comunidade de filósofos.",
+                    semanticScholar: "Semantic Scholar", desc_semanticScholar: "Uma ferramenta de pesquisa com IA para literatura científica.",
+                    arxiv: "arXiv", desc_arxiv: "Um arquivo de acesso aberto para artigos acadêmicos nas áreas de física, matemática, ciência da computação e mais.",
+                    jstor: "JSTOR", desc_jstor: "Uma biblioteca digital de periódicos acadêmicos, livros e fontes primárias.",
+                    connectedPapers: "Connected Papers", desc_connectedPapers: "Uma ferramenta visual para ajudar pesquisadores a encontrar e explorar artigos acadêmicos.",
+                    core: "CORE", desc_core: "Agrega resultados de pesquisa de acesso aberto de repositórios e periódicos de todo o mundo.",
+                    doaj: "Directory of Open Access Journals", desc_doaj: "Um diretório online com curadoria da comunidade que indexa e fornece acesso a periódicos de alta qualidade, de acesso aberto e revisados por pares.",
+                    internetArchiveScholar: "Internet Archive Scholar", desc_internetArchiveScholar: "Um motor de busca para materiais acadêmicos preservados no Internet Archive.",
+                    citeseer: "CiteSeerX", desc_citeseer: "Uma biblioteca digital e motor de busca de literatura científica que se concentra principalmente na literatura em ciência da computação e da informação.",
+                    crossref: "CrossRef", desc_crossref: "Torna os resultados da pesquisa fáceis de encontrar, citar, vincular, avaliar e reutilizar.",
+                    researchgate: "ResearchGate", desc_researchgate: "Uma rede social para cientistas e pesquisadores compartilharem artigos, fazerem e responderem perguntas e encontrarem colaboradores.",
+                    khanAcademy: "Khan Academy", desc_khanAcademy: "Organização educacional sem fins lucrativos criada para fornecer educação gratuita e de alta qualidade para qualquer pessoa, em qualquer lugar.",
+                    wolframAlpha: "WolframAlpha", desc_wolframAlpha: "Um motor de conhecimento computacional ou motor de resposta.",
+                    libreoffice: "LibreOffice", desc_libreoffice: "Uma suíte de software de produtividade de escritório gratuita e de código aberto.",
+                    audacity: "Audacity", desc_audacity: "Um software gratuito e de código aberto para edição e gravação de áudio digital.",
+                    zotero: "Zotero", desc_zotero: "Um assistente de pesquisa pessoal, gratuito e de código aberto, que ajuda a coletar, organizar, citar e compartilhar pesquisas.",
+                    peazip: "PeaZip", desc_peazip: "Um gerenciador e arquivador de arquivos gratuito e de código aberto.",
+                    sevenzip: "7-Zip", desc_sevenzip: "Um arquivador de arquivos gratuito e de código aberto com alta taxa de compressão.",
+                    obsidian: "Obsidian", desc_obsidian: "Uma poderosa base de conhecimento sobre uma pasta local de arquivos de texto simples em Markdown.",
+                    drawio: "Draw.io", desc_drawio: "Um software de diagrama online gratuito para fazer fluxogramas, diagramas de processo, etc.",
+                    lightshot: "Lightshot", desc_lightshot: "Uma ferramenta de captura de tela simples e conveniente.",
+                    mpv: "MPV", desc_mpv: "Um reprodutor de mídia gratuito e de código aberto.",
+                    obs: "OBS Studio", desc_obs: "Um software gratuito e de código aberto para gravação de vídeo e transmissão ao vivo.",
+                    equalizerapo: "Equalizer APO", desc_equalizerapo: "Um equalizador para todo o sistema para Windows.",
+                    peacegui: "Peace GUI", desc_peacegui: "Um equalizador e mixer de áudio para todo o seu software de PC em qualquer versão do Windows.",
+                    hesuvi: "HeSuVi", desc_hesuvi: "Transforma seus fones de ouvido em um sistema de som surround virtual 7.1.",
+                    unpaywall: "Unpaywall", desc_unpaywall: "Uma extensão de navegador que encontra versões legais e gratuitas de artigos de pesquisa pagos.",
+                    chrono: "Chrono Download Manager", desc_chrono: "Uma extensão de gerenciador de downloads para seu navegador.",
+                    sponsorblock: "SponsorBlock", desc_sponsorblock: "Uma extensão de navegador de código aberto para pular segmentos de patrocinadores em vídeos do YouTube.",
+                    ublock: "uBlock Origin", desc_ublock: "Um bloqueador de conteúdo de amplo spectro para navegadores.",
+                    socialfocus: "SocialFocus", desc_socialfocus: "Uma extensão de navegador para ocultar feeds que distraem nas redes sociais.",
+                    readerview: "Reader View", desc_readerview: "Uma extensão de navegador que remove a desordem das páginas da web.",
+                    googlescholarpdf: "Google Scholar PDF Reader", desc_googlescholarpdf: "Adiciona um botão aos resultados do Google Scholar para abrir PDFs diretamente.",
+                    greasyfork: "Greasy Fork", desc_greasyfork: "Um repositório para scripts de usuário (userscripts).",
+                    librarygenesis: "Library Genesis", desc_librarygenesis: "Uma biblioteca gratuita baseada em compartilhamento de arquivos para artigos de periódicos acadêmicos, livros acadêmicos e de interesse geral.",
+                    annasarchive: "Anna's Archive", desc_annasarchive: "Uma biblioteca gratuita.",
+                    scihub: "Sci-Hub", desc_scihub: "Um site de biblioteca gratuita que fornece acesso gratuito a milhões de artigos de pesquisa e livros.",
+                    freemediaheckyeah: "FreeMediaHeckYeah", desc_freemediaheckyeah: "Uma lista com curadoria de recursos de mídia gratuitos.",
+                    slum: "SLUM - Monitor de Bibliotecas", desc_slum: "Uma ferramenta para monitorar a disponibilidade e o servidor das bibliotecas gratuitas.",
+                    sciencehubmutualaid: "Science Hub Mutual AID", desc_sciencehubmutualaid: "Uma plataforma de ajuda mútua para acesso à literatura científica.",
+                    wikipedia: "Wikipedia", desc_wikipedia: "Uma enciclopédia online multilíngue, livre e colaborativa.",
+                    blip: "Blip", desc_blip: "Um aplicativo de compartilhamento de arquivos ponto a ponto (P2P).",
+                    transmission: "Transmission", desc_transmission: "Um cliente BitTorrent rápido, fácil e gratuito.",
+                    qbittorrent: "qBittorrent", desc_qbittorrent: "Um cliente BitTorrent multiplataforma, gratuito e de código aberto.",
+                    privatetrackerlist: "Lista de Trackers Privados", desc_privatetrackerlist: "Uma lista mantida pela comunidade de rastreadores BitTorrent privados.",
+                    luciolefont: "Fonte Luciole", desc_luciolefont: "Fonte para pessoas disléxicas, pessoas com baixa visão e visão normal, melhorando a legibilidade e a capacidade de leitura para todos por meio de métricas testadas cientificamente.",
+                    oecd: "OECD Data", desc_oecd: "Uma rica fonte de dados estatísticos, econômicos e sociais comparáveis dos países da OCDE.",
+                    googleDatasetSearch: "Google Dataset Search", desc_googleDatasetSearch: "Um motor de busca do Google para encontrar conjuntos de dados armazenados em toda a web.",
+                    kaggleDatasets: "Kaggle Datasets", desc_kaggleDatasets: "Plataforma com uma vasta coleção de conjuntos de dados para análise e aprendizado de máquina.",
+                    huggingFaceDatasets: "Hugging Face Datasets", desc_huggingFaceDatasets: "Uma biblioteca de código aberto com milhares de conjuntos de dados para tarefas de PNL, visão computacional e áudio.",
+                    zenodo: "Zenodo", desc_zenodo: "Repositório de pesquisa de acesso aberto de uso geral desenvolvido sob o programa europeu OpenAIRE.",
+                    academicTorrents: "Academic Torrents", desc_academicTorrents: "Uma plataforma para compartilhar grandes conjuntos de dados para pesquisa, usando o protocolo BitTorrent.",
+                    googleCloud: "Google Cloud Datasets", desc_googleCloud: "Conjuntos de dados públicos hospedados no Google Cloud, prontos para análise.",
+                    eurostat: "Eurostat", desc_eurostat: "O gabinete de estatísticas da União Europeia, fornecendo estatísticas de alta qualidade para a Europa.",
+                    googleNgrams: "Google Ngrams Viewer", desc_googleNgrams: "Visualize a frequência de palavras ou frases em um corpus de livros ao longo do tempo.",
+                    dspaceMit: "DSpace@MIT", desc_dspaceMit: "Um repositório digital que captura, preserva e compartilha a produção intelectual do MIT.",
+                    mendeleyData: "Mendeley Data", desc_mendeleyData: "Um repositório seguro na nuvem onde você pode armazenar e compartilhar seus dados de pesquisa.",
+                    papersWithCode: "Papers with Code Datasets", desc_papersWithCode: "Uma comunidade de código aberto para artigos de aprendizado de máquina, código, conjuntos de dados e tabelas de classificação.",
+                    openScienceFramework: "Open Science Framework", desc_openScienceFramework: "Uma plataforma de gerenciamento de projetos de código aberto que apoia pesquisadores ao longo de todo o ciclo de vida do projeto.",
+                    re3data: "re3data", desc_re3data: "Um registro global de repositórios de dados de pesquisa de todas as disciplinas acadêmicas.",
+                    statista: "Statista", desc_statista: "Um portal online alemão para estatísticas, que disponibiliza dados de institutos de mercado e de opinião.",
+                    tensorFlowHub: "TensorFlow Hub", desc_tensorFlowHub: "Uma biblioteca para a publicação, descoberta e consumo de partes reutilizáveis de modelos de aprendizado de máquina.",
+                    ukDataService: "UK Data Service", desc_ukDataService: "A maior coleção do Reino Unido de dados de pesquisa social, econômica e populacional."
+                }
+            };
+            
+            const allLinks = {
+                generalSearch: [ { key: 'google', url: 'https://www.google.com/' }, { key: 'duckduckgo', url: 'https://duckduckgo.com/' }, { key: 'bing', url: 'https://www.bing.com/' }, { key: 'yandex', url: 'https://yandex.com/' }, { key: 'marginalia', url: 'https://marginalia.nu/' }, { key: 'wiby', url: 'https://wiby.me/' }, ],
+                academicSearch: [ { key: 'googleScholar', url: 'https://scholar.google.com/' }, { key: 'philpapers', url: 'https://philpapers.org/' }, { key: 'semanticScholar', url: 'https://www.semanticscholar.org/' }, { key: 'arxiv', url: 'https://arxiv.org/' }, { key: 'jstor', url: 'https://www.jstor.org/' }, { key: 'connectedPapers', url: 'https://www.connectedpapers.com/' }, { key: 'core', url: 'https://core.ac.uk/' }, { key: 'doaj', url: 'https://www.doaj.org/' }, { key: 'internetArchiveScholar', url: 'https://scholar.archive.org/' }, { key: 'citeseer', url: 'http://citeseerx.ist.psu.edu/' }, { key: 'crossref', url: 'https://www.crossref.org/guestquery/' }, { key: 'researchgate', url: 'https://www.researchgate.net/' }, { key: 'khanAcademy', url: 'https://www.khanacademy.org/' }, { key: 'wolframAlpha', url: 'https://www.wolframalpha.com/' } ],
+                librariesArchives: [ { key: 'librarygenesis', url: 'https://libgen.li/' }, { key: 'annasarchive', url: 'https://annas-archive.org/' }, { key: 'scihub', url: 'https://sci-hub.se/' }, { key: 'freemediaheckyeah', url: 'https://fmhy.net/' }, { key: 'slum', url: 'https://open-slum.org/' }, { key: 'sciencehubmutualaid', url: 'https://www.pidantuan.com/' }, { key: 'wikipedia', url: 'https://www.wikipedia.org/' }, ],
+                dataResources: [ { key: 'googleDatasetSearch', url: 'https://datasetsearch.research.google.com/' }, { key: 'kaggleDatasets', url: 'https://www.kaggle.com/datasets' }, { key: 'huggingFaceDatasets', url: 'https://huggingface.co/datasets' }, { key: 'zenodo', url: 'https://zenodo.org/' }, { key: 'academicTorrents', url: 'https://academictorrents.com/' }, { key: 'googleCloud', url: 'https://cloud.google.com/solutions/datasets' }, { key: 'eurostat', url: 'https://ec.europa.eu/eurostat/web/main/data/database' }, { key: 'googleNgrams', url: 'https://books.google.com/ngrams' }, { key: 'dspaceMit', url: 'https://dspace.mit.edu/' }, { key: 'mendeleyData', url: 'https://data.mendeley.com/' }, { key: 'papersWithCode', url: 'https://paperswithcode.com/datasets' }, { key: 'openScienceFramework', url: 'https://osf.io/' }, { key: 're3data', url: 'https://www.re3data.org/' }, { key: 'statista', url: 'https://www.statista.com/' }, { key: 'tensorFlowHub', url: 'https://tfhub.dev/' }, { key: 'ukDataService', url: 'https://ukdataservice.ac.uk/' }, { key: 'oecd', url: 'https://data.oecd.org/' } ],
+                productivitySoftware: [ { key: 'libreoffice', url: 'https://www.libreoffice.org/' }, { key: 'zotero', url: 'https://www.zotero.org/' }, { key: 'audacity', url: 'https://www.audacityteam.org/' }, { key: 'obsidian', url: 'https://obsidian.md/' }, { key: 'drawio', url: 'https://app.diagrams.net/' }, { key: 'peazip', url: 'https://peazip.github.io/' }, { key: 'sevenzip', url: 'https://www.7-zip.org/' }, { key: 'lightshot', url: 'https://app.prntscr.com/pt-br/download.html' }, { key: 'luciolefont', url: 'https://www.luciole-vision.com/' }, ],
+                mediaAudio: [ { key: 'mpv', url: 'https://mpv.io/' }, { key: 'obs', url: 'https://obsproject.com/' }, { key: 'equalizerapo', url: 'https://sourceforge.net/projects/equalizerapo/' }, { key: 'peacegui', url: 'https://sourceforge.net/projects/peace-equalizer-apo-extension/' }, { key: 'hesuvi', url: 'https://sourceforge.net/projects/hesuvi/' }, ],
+                browserExtensions: [ { key: 'ublock', url: 'https://ublockorigin.com/' }, { key: 'unpaywall', url: 'https://unpaywall.org/' }, { key: 'sponsorblock', url: 'https://sponsor.ajay.app/' }, { key: 'chrono', url: 'https://www.chronodownloader.net/' }, { key: 'socialfocus', url: 'https://socialfocus.app/' }, { key: 'readerview', url: 'https://webextension.org/listing/chrome-reader-view.html' }, { key: 'googlescholarpdf', url: 'https://chromewebstore.google.com/detail/google-scholar-pdf-reader/dahenjhkoodjbpjheillcadbppiidmhp' }, { key: 'greasyfork', url: 'https://greasyfork.org/' }, ],
+                fileSharing: [ { key: 'blip', url: 'https://blip.net/' }, { key: 'transmission', url: 'https://transmissionbt.com/' }, { key: 'qbittorrent', url: 'https://www.qbittorrent.org/' }, { key: 'privatetrackerlist', url: 'https://hdvinnie.github.io/Private-Trackers-Spreadsheet/' }, ]
+            };
+            
+            const icons = {
+                sun: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Z"/></svg>`,
+                moon: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z"/></svg>`
+            };
+            
+            const fonts = {
+                sans: "'Luciole', sans-serif",
+                serif: "'RobotoSerif', serif",
+            };
+
+            // --- SELETORES DE ELEMENTOS DOM ---
+            const mainContainer = document.getElementById('main-container');
+            const mainContent = document.getElementById('main-content');
+            const creditsText = document.getElementById('credits-text');
+            const overlay = document.getElementById('overlay');
+            const sideNav = document.getElementById('side-nav');
+            const settingsPanel = document.getElementById('settings-panel');
+            const tocNav = document.getElementById('toc-nav');
+            const homeToggleMobileBtn = document.getElementById('home-toggle-mobile');
+            const settingsToggleBtn = document.getElementById('settings-toggle');
+            const tocToggleMobileBtn = document.getElementById('toc-toggle-mobile');
+            const closeSettingsBtn = document.getElementById('close-settings-panel');
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const langSelector = document.getElementById('language-selector');
+            const fontToggleBtn = document.getElementById('font-toggle-btn');
+            const increaseFontBtn = document.getElementById('increase-font-btn');
+            const decreaseFontBtn = document.getElementById('decrease-font-btn');
+
+            // --- FUNÇÕES ---
+            const T = (key, lang) => translations[lang]?.[key] || translations.en[key] || key;
+            
+            const setLanguage = (lang) => {
+                localStorage.setItem('language', lang);
+                document.documentElement.lang = lang;
+                
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.getAttribute('data-lang-key');
+                    el.textContent = T(key, lang);
+                });
+                
+                document.title = T('pageTitle', lang);
+                creditsText.innerHTML = T('creditsText', lang);
+                updateThemeToggleButton(localStorage.getItem('theme') === 'dark');
+                updateFontToggleButton(lang);
+                renderLinks(lang);
+                
+                langSelector.value = lang;
+            };
+
+            const toggleTheme = () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateThemeToggleButton(isDark);
+            };
+            
+            const updateFontMultiplier = () => {
+                const multiplier = document.body.classList.contains('serif-font') ? 1.09 : 1;
+                document.documentElement.style.setProperty('--serif-multiplier', multiplier);
+            };
+
+            const setFontFamily = (font) => {
+                document.body.classList.toggle('serif-font', font === fonts.serif);
+                localStorage.setItem('fontPreference', font);
+                updateFontToggleButton(localStorage.getItem('language') || 'pt');
+                updateFontMultiplier();
+            };
+
+            const toggleFont = () => {
+                const currentFont = localStorage.getItem('fontPreference') || fonts.sans;
+                const newFont = (currentFont === fonts.sans) ? fonts.serif : fonts.sans;
+                setFontFamily(newFont);
+            };
+
+            const setContentScale = (amount) => {
+                let currentScale = parseFloat(getComputedStyle(mainContainer).getPropertyValue('--content-scale'));
+                if (isNaN(currentScale)) currentScale = 1.1;
+                
+                const newScale = Math.max(0.8, Math.min(1.8, currentScale + amount));
+                
+                mainContainer.style.setProperty('--content-scale', newScale);
+                localStorage.setItem('contentScale', newScale);
+            };
+
+            const updateThemeToggleButton = (isDark) => {
+                const lang = localStorage.getItem('language') || 'pt';
+                const iconSVG = isDark ? icons.sun : icons.moon;
+                const label = isDark ? T('themeToggleLight', lang) : T('themeToggleDark', lang);
+
+                themeToggleBtn.innerHTML = iconSVG;
+                themeToggleBtn.setAttribute('aria-label', label);
+            };
+
+            const updateFontToggleButton = (lang) => {
+                const currentFont = localStorage.getItem('fontPreference') || fonts.sans;
+                const fontNameKey = (currentFont === fonts.serif) ? 'fontSerif' : 'fontSansSerif';
+                fontToggleBtn.textContent = T(fontNameKey, lang);
+            };
+
+            const renderTableOfContents = () => {
+                const tocList = document.getElementById('toc-list');
+                const contentHeaders = document.querySelectorAll('#main-content h2');
+                tocList.innerHTML = '';
+
+                contentHeaders.forEach((header, index) => {
+                    const headerId = `section-header-${index}`;
+                    header.id = headerId;
+
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `#${headerId}`;
+                    a.textContent = header.textContent;
+                    
+                    a.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.querySelector(a.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        closeAllPanels();
+                    });
+
+                    li.appendChild(a);
+                    tocList.appendChild(li);
+                });
+            };
+
+            const renderLinks = (lang) => {
+                mainContent.innerHTML = '';
+                for (const categoryKey in allLinks) {
+                    const section = document.createElement('section');
+                    section.className = 'links-section';
+                    
+                    const title = document.createElement('h2');
+                    title.setAttribute('data-lang-key', categoryKey);
+                    title.textContent = T(categoryKey, lang);
+                    section.appendChild(title);
+
+                    const list = document.createElement('ul');
+                    list.className = 'links-list';
+
+                    allLinks[categoryKey].forEach(link => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = link.url;
+                        a.target = "_blank";
+                        a.rel = "noopener noreferrer";
+
+                        const titleSpan = document.createElement('span');
+                        titleSpan.className = 'link-title';
+                        titleSpan.setAttribute('data-lang-key', link.key);
+                        titleSpan.textContent = T(link.key, lang);
+
+                        const descP = document.createElement('p');
+                        descP.className = 'link-description';
+                        descP.setAttribute('data-lang-key', `desc_${link.key}`);
+                        descP.textContent = T(`desc_${link.key}`, lang);
+
+                        a.appendChild(titleSpan);
+                        a.appendChild(descP);
+                        li.appendChild(a);
+                        list.appendChild(li);
+                    });
+
+                    section.appendChild(list);
+                    mainContent.appendChild(section);
+                }
+                renderTableOfContents();
+            };
+
+            const closeAllPanels = () => {
+                sideNav.classList.remove('is-open');
+                settingsPanel.classList.remove('is-open');
+                tocNav.classList.remove('is-open');
+                overlay.classList.remove('is-visible');
+                overlay.classList.remove('for-side-nav');
+            };
+
+            const toggleMobilePanel = (panelToToggle) => {
+                const isOpening = !panelToToggle.classList.contains('is-open');
+                
+                if (!isOpening) {
+                    closeAllPanels();
+                    return;
+                }
+                
+                closeAllPanels();
+                panelToToggle.classList.add('is-open');
+                overlay.classList.add('is-visible', 'for-side-nav');
+            };
+            
+            // --- INICIALIZAÇÃO DA PÁGINA ---
+            
+            // Carrega tema
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+            if (isDark) document.documentElement.classList.add('dark');
+            
+            // Carrega fonte
+            const savedFontFamily = localStorage.getItem('fontPreference') || fonts.sans;
+            setFontFamily(savedFontFamily);
+
+            // Carrega escala de conteúdo
+            const savedScale = localStorage.getItem('contentScale');
+            if (savedScale) {
+                mainContainer.style.setProperty('--content-scale', savedScale);
+            } else {
+                mainContainer.style.setProperty('--content-scale', 1.1);
+            }
+
+            // Carrega estado dos menus no desktop
+            if (localStorage.getItem('sideNavDesktopHidden') === 'true') {
+                sideNav.classList.add('is-hidden-desktop');
+                mainContainer.classList.add('side-nav-hidden');
+            }
+            if (localStorage.getItem('tocNavDesktopHidden') === 'true') {
+                tocNav.classList.add('is-hidden-desktop');
+                mainContainer.classList.add('toc-nav-hidden');
+            }
+
+            // Carrega idioma
+            const savedLang = localStorage.getItem('language') || 'pt';
+            setLanguage(savedLang);
+            
+            // --- EVENT LISTENERS (OUVINTES DE EVENTOS) ---
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            langSelector.addEventListener('change', (e) => setLanguage(e.target.value));
+            fontToggleBtn.addEventListener('click', toggleFont);
+
+            increaseFontBtn.addEventListener('click', () => setContentScale(0.1));
+            decreaseFontBtn.addEventListener('click', () => setContentScale(-0.1));
+
+            // Lógica para alternar painéis (Mobile vs Desktop)
+            homeToggleMobileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.innerWidth < 1024) {
+                    toggleMobilePanel(sideNav);
+                } else {
+                    const isHidden = sideNav.classList.toggle('is-hidden-desktop');
+                    mainContainer.classList.toggle('side-nav-hidden');
+                    localStorage.setItem('sideNavDesktopHidden', isHidden);
+                }
+            });
+
+            tocToggleMobileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.innerWidth < 1280) {
+                    toggleMobilePanel(tocNav);
+                } else {
+                    const isHidden = tocNav.classList.toggle('is-hidden-desktop');
+                    mainContainer.classList.toggle('toc-nav-hidden');
+                    localStorage.setItem('tocNavDesktopHidden', isHidden);
+                }
+            });
+
+            settingsToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                settingsPanel.classList.toggle('is-open');
+                overlay.classList.remove('for-side-nav');
+                overlay.classList.toggle('is-visible', settingsPanel.classList.contains('is-open'));
+            });
+
+            closeSettingsBtn.addEventListener('click', () => closeAllPanels());
+            overlay.addEventListener('click', () => closeAllPanels());
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") closeAllPanels();
+            });
+        });
+    </script>
+</body>
+</html>
